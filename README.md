@@ -8,3 +8,4 @@ We decided to create a folder for every UI page in the SCloud application. For e
 
 So make sure you add all your HTML, CSS, and any other corresponding files to a folder corresponding to a specific page.
 
+test 
