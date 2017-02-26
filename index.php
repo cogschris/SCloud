@@ -1,5 +1,5 @@
 <?php 
 
-$contentVar = $_POST['contentVar'];
+$contentVar = $_POST['artist'];
 echo contentVar;
 ?>
