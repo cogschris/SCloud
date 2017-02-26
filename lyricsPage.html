@@ -3,9 +3,9 @@
 	<head>
 		<title>Lyrics Page</title>
 		
-		<link rel="stylesheet" href="./css/style.css">
+		<link rel="stylesheet" href="./css/lyrics.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	</head>
 
 	<body>
@@ -28,7 +28,7 @@
 
 			<div class = "row">
 				<div class = "col-xs-3 col-xs-offset-3">
-					<div class = "btn pull-right" onClick="backToHome('srivas');"> 
+					<div class = "btn pull-right" onClick="return false" onmousedown="backToHome('srivas');"> 
 						<div id="back_to_home_btn">Back To Home</div>
 					</div>
 				</div>
@@ -46,7 +46,8 @@
 		<script type="text/javascript">
 			function backToHome(cv){
 				//window.location.href="index.html";
-				var url = "index.php";
+				var url = "/var/www/html/index.php";
+				console.log(url);
 				$.post(url, {contentVar: cv}, function(data){
 					console.log(data);
 				});
