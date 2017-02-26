@@ -1,0 +1,27 @@
+/*div{
+	border: 1px solid black;
+}*/
+
+#title_lyrics_page{
+	color: #c53fff;
+	text-align: center;
+	margin-top: 30px;
+}
+
+.btn{
+	margin-top: 15px;
+	background: #c53fff;
+}
+
+.container-full{
+	background-color: #bababa;
+	height: 800px;
+}
+
+#back_to_home_btn{
+	color:white;
+}
+
+#back_to_word_btn{
+	color:white;
+}
