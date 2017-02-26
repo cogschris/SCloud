@@ -73,12 +73,10 @@ WordCloud.prototype = {
   },
 
   addArtist: function() {
-    artistAdded: function(artist) {
-      this._artists.push(artist);
-      this.artistAdded.notify({
-        artist: artist;
-      });
-    }
+    this._artists.push(artist);
+    this.artistAdded.notify({
+      artist: artist
+    });
   },
 
   getWords: function() {
@@ -110,6 +108,7 @@ function WordCloudView(wordCloud, elements) {
 
   // Attach listeners to HTML controls
   this._elements.searchButton.click(function() {
+    var item = window.prompt('Add item:', '');
     _this.searchButtonClicked.notify();
   });
   this._elements.addButton.click(function() {
