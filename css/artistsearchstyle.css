@@ -6,11 +6,17 @@
  .btn {
  	background: #c53fff;
  	color: #ffffff;
+ 	font-size: 20%;
  }
 
  .container-full{
  	background:#bababa;
  	height:1000px;
+ }
+
+ .glyphicon {
+ 	margin-top: 3px;
+ 	font-size: 11px;
  }
 
 

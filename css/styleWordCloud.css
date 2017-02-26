@@ -15,6 +15,16 @@ and open the template in the editor.
     width:100%;
 }
 
+.btn {
+    background:#c53fff;
+    color:white;
+}
+
+
 body {
     color:#c53fff;
+}
+
+.glyphicon-search, .glyphicon-list, .glyphicon-user {
+	padding-right: 5px;
 }
