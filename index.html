@@ -20,12 +20,14 @@
 		<div class="row">
 			<div class="col-xs-8 col-xs-offset-2">
 
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search for Artist" id="artistSearchInput">
+				
+				<form id="searchForm" class = "input-group" action="index.php" method = "POST">
+					<input type="text" class="form-control" placeholder="Search for Artist" id="artistSearchInput" name="artist">
 					<span class="input-group-btn">
-						<button class="btn" type="button" id="searchArtistButton" onclick="linkToWordCloud();"><i class="glyphicon glyphicon-search pull-left"></i>Search</button>
+						<input class="btn" type="submit" id="searchArtistButton" onclick="linkToWordCloud();"><i class="glyphicon glyphicon-search pull-left"></i>Search</button>
 					</span>
-		        </div>
+				</form>
+		        
 
 	        </div>
 		</div>
