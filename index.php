@@ -1,6 +1,85 @@
-<?php 
+<!-- This file is the index file, which acts as the landing page for the SCloud Application. This is where the user will first be able to input an artist into the search field and search for his/her songs. Once the user searches for an artist, this will lead to the following Word Cloud pages. -->
 
-$contentVar = $_POST['artist'];
-print ('received a request call');
-echo contentVar;
-?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>
+		SCloud Home
+	</title>
+	<!-- <link rel="stylesheet" type="text/css" href="css/artistsearchstyle.css"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+</head>
+
+
+
+
+
+<body>
+
+
+<div id=testDiv>
+	
+
+
+
+
+</div>
+
+<form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+
+  
+  <button id=testButton type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+</body>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>	
+
+	<script type="text/javascript">
+		
+		$('#testButton').click(function(event){
+
+			event.preventDefault();
+
+			var myData = {
+				name: $('#exampleInputEmail1').val(),
+			}
+
+			$.ajax({
+				
+
+				url: "searchArtists.php",
+				data: myData
+
+				
+			})
+			.done(function(data) {
+
+
+				// console.log($('#test'));
+
+				$('#testDiv').html(data);
+				
+				// console.log(data);
+
+
+			}).fail(function(response){
+
+
+
+			});
+
+
+		})
+
+
+	</script>
+</html>
