@@ -20,13 +20,20 @@
 				<div class="input-group">
 					<input type="text" class="form-control" placeholder="Search for Artist" id="artistSearchInput">
 					<span class="input-group-btn">
-						<button class="btn" type="button">Search</button>
+						<button class="btn" type="button" id="searchArtistButton" onclick="linkToWordCloud();">Search</button>
 					</span>
 		        </div>
 
 	        </div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		
+		function linkToWordCloud(){
+			window.location.href = "wordcloud.html";
+		}
+	</script>
 	
 
 </body>

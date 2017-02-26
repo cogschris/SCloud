@@ -24,3 +24,7 @@ and open the template in the editor.
 body {
     color:#c53fff;
 }
+
+.glyphicon-search, .glyphicon-list, .glyphicon-user {
+	padding-right: 5px;
+}
