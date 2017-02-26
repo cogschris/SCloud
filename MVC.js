@@ -26,6 +26,29 @@ function Word(word, wordCloud) {
   var freqInSongMap = new Map();
 }
 
+Word.prototype = {
+
+  addSong: function() {
+
+  },
+
+  getFreqInCloud: function() {
+
+  },
+
+  getFreqInSong: function() {
+
+  },
+
+  updateFreqInCloud: function() {
+
+  },
+
+  updateFreqInSong: function() {
+
+  }
+};
+
 //WordCloud Class - Model
 function WordCloud() {
   this._artists = [];
@@ -62,3 +85,8 @@ WordCloud.prototype = {
   }
 
 };
+
+// WordCloudView Class - View
+function WordCloudView(wordCloud) {
+  this._wordCloud = 
+}
