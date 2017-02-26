@@ -3,25 +3,25 @@
 }*/
 
 #title_lyrics_page{
-	color: #c53fff;
+	color: #c578dc;
 	text-align: center;
 	margin-top: 30px;
 }
 
 .btn{
 	margin-top: 15px;
-	background: #c53fff;
+	background: #c578dc;/*#c53fff;*/
 }
 
 .container-full{
-	background-color: #bababa;
+	background-color: #DCDCDC;/*#bababa;*/
 	height: 800px;
 }
 
 #back_to_home_btn{
-	color:white;
+	color:black;
 }
 
 #back_to_word_btn{
-	color:white;
+	color:black;
 }

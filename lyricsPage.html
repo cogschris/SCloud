@@ -5,7 +5,7 @@
 		
 		<link rel="stylesheet" href="./css/style.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	</head>
 
 	<body>
@@ -28,13 +28,13 @@
 
 			<div class = "row">
 				<div class = "col-xs-3 col-xs-offset-3">
-					<div class = "btn pull-right"> 
+					<div class = "btn pull-right" onClick="backToHome('srivas');"> 
 						<div id="back_to_home_btn">Back To Home</div>
 					</div>
 				</div>
 
 				<div class = "col-xs-3">
-					<div class = "btn"> 
+					<div class = "btn" onClick="backToWord();"> 
 						<div id="back_to_word_btn">Back To Word</div>
 					</div>
 				</div>
@@ -42,7 +42,19 @@
 			</div>
 		</div>
 
-
+		<!-- These are links to the home page and the word page -->
+		<script type="text/javascript">
+			function backToHome(cv){
+				//window.location.href="index.html";
+				var url = "index.php";
+				$.post(url, {contentVar: cv}, function(data){
+					console.log(data);
+				});
+			}
+			function backToWord(){
+				window.location.href="songListPage.html"
+			}
+		</script>
 		
 	</body>
 
