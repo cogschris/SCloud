@@ -36,6 +36,13 @@
 		function linkToWordCloud(){
 			window.location.href = "wordcloud.html";
 		}
+
+		function testFunction(cv){
+			var url = "index.php";
+			$.post(url, {contentVar:cv}, function(data){
+				$('#mainHeader').html(data).show();
+			});
+		}
 	</script>
 	
 
