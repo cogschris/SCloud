@@ -26,8 +26,9 @@
 <form>
   <div class="form-group">
     <label for="exampleInputEmail1"> Search </label>
-    <input class="form-control" id="artistListInput" list="artistlist" onkeyup="doSearch(this.value);" aria-describedby="emailHelp" placeholder="Enter artist">
+    <input class="form-control" id="artistListInput" list="artistlist" onkeyup="getSearchSuggestions(this.value);" aria-describedby="emailHelp" placeholder="Enter artist">
     <datalist id="artistlist">
+    
     </datalist>
     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
   </div>
@@ -48,22 +49,41 @@
 		var delayTimer;
 
 		//doSearch takes in the user's input and displays the drop-down suggestions
-		function doSearch(text){
+		function doSearch(suggestions){
 			clearTimeout(delayTimer);
 			delayTimer = setTimeout(function(){
 				//here we will make the api call 
+
 				//alter inner html to 
 
 				//altering the inner HTML to update the drop-down suggestion menu
 				document.getElementById('artistlist').innerHTML = '';
-				var arr = ['srivas', 'shakira', 'pitbull', 'pitburn', 'shalia'];
 
 				//iterating through the array of suggested artists to display to user
-				for (var i = 0; i < arr.length; i++){
-					document.getElementById('artistlist').innerHTML += '<option value="' + arr[i] + '"></option>';
+				var appendHTML = '';
+				for (var i = 0; i < suggestions.length; i++){
+					appendHTML += '<option value="' + suggestions[i] + '"></option>';
 				}
+				document.getElementById('artistlist').innerHTML = appendHTML;
 				console.log(document.getElementById('artistlist').innerHTML);
 			}, 1000);
+		}
+
+		function getSearchSuggestions(prefix) {
+		  $.ajax({
+		    url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(prefix) + "&limit=10",
+		    dataType: "json",
+		    success: function( response ) {
+		      console.log( response ); // server response
+		      var suggestions = new Array();
+		      for (var i = 0; i < 9; i++) {
+		        console.log("Suggestion: " + response.data[i].name);
+		        suggestions.push(response.data[i].name);
+		      }
+		      doSearch(suggestions);
+		      //return suggestions;
+		    }
+		  });
 		}
 		
 		$('#testButton').click(function(event){
