@@ -25,6 +25,7 @@
 
 <form>
   <div class="form-group">
+
     <label for="exampleInputEmail1"> Search </label>
     <input class="form-control" id="artistListInput" list="artistlist" onkeyup="getSearchSuggestions(this.value);" aria-describedby="emailHelp" placeholder="Enter artist">
     <datalist id="artistlist">
@@ -34,7 +35,7 @@
   </div>
 
   
-  <button id=testButton type="submit" class="btn btn-primary">Submit</button>
+  <button id=testButton type="Search" class="btn btn-primary"> Search </button>
 </form>
 
 
