@@ -13,7 +13,7 @@
 	<h1> <center> Welcome to SCloud! </center></h1>
 </head>
 
-<body>
+<body bgcolor="#bababa">
 
 
 <div id=testDiv>
@@ -25,13 +25,18 @@
 
 <form>
   <div class="form-group">
-    <label for="exampleInputEmail1"> Search </label>
-    <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter artist">
+   <input class="form-control" id="searchInput" aria-describedby="emailHelp" placeholder="Enter artist">
     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
   </div>
 
-  
-  <button id=testButton type="submit" class="btn btn-primary"> Search </button>
+  <button onclick = "window.location.href='songListPage.php'" id=testButton type="search" class="btn pull-right" style ="position: absolute; right: 0;"> Search </button>
+<!--   <script type = "text/javascript">
+  	document.getElementbyID("testButton").onClick = function () {
+  		location.href = "songListPage.php";
+  	};
+  	</script> -->
+
+
 </form>
 
 
@@ -78,4 +83,10 @@
 
 
 	</script>
+
+
+
+
+
+
 </html>
