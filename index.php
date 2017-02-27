@@ -30,7 +30,7 @@
   </div>
 
   
-  <button id=testButton type="Search" class="btn btn-primary">Search</button>
+  <button id=testButton type="Search" class="btn btn-primary"> Search </button>
 </form>
 
 
