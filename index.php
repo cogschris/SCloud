@@ -25,7 +25,11 @@
 
 <form>
   <div class="form-group">
-    <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter artist">
+
+    <label for="exampleInputEmail1"> Search </label>
+    <input class="form-control" id="artistListInput" list="artistlist" onkeyup="doSearch(this.value);" aria-describedby="emailHelp" placeholder="Enter artist">
+    <datalist id="artistlist">
+    </datalist>
     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
   </div>
 
@@ -39,12 +43,35 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>	
 
 	<script type="text/javascript">
+
+
+		//this variable keeps track of the Timer for searches
+		var delayTimer;
+
+		//doSearch takes in the user's input and displays the drop-down suggestions
+		function doSearch(text){
+			clearTimeout(delayTimer);
+			delayTimer = setTimeout(function(){
+				//here we will make the api call 
+				//alter inner html to 
+
+				//altering the inner HTML to update the drop-down suggestion menu
+				document.getElementById('artistlist').innerHTML = '';
+				var arr = ['srivas', 'shakira', 'pitbull', 'pitburn', 'shalia'];
+
+				//iterating through the array of suggested artists to display to user
+				for (var i = 0; i < arr.length; i++){
+					document.getElementById('artistlist').innerHTML += '<option value="' + arr[i] + '"></option>';
+				}
+				console.log(document.getElementById('artistlist').innerHTML);
+			}, 1000);
+		}
 		
 		$('#testButton').click(function(event){
 
 			event.preventDefault();
 
-			var myData = {
+			var myData = {	
 				name: $('#exampleInputEmail1').val(),
 			}
 
