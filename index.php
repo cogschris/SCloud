@@ -27,7 +27,7 @@
   <div class="form-group">
 
     <label for="exampleInputEmail1"> Search </label>
-    <input class="form-control" id="artistListInput" list="artistlist" onkeyup="getSearchSuggestions(this.value);" aria-describedby="emailHelp" placeholder="Enter artist">
+    <input class="form-control" id="artistListInput" list="artistlist" onkeypress="getSearchSuggestions(this.value);" aria-describedby="emailHelp" placeholder="Enter artist" autocomplete="off">
     <datalist id="artistlist">
     
     </datalist>
@@ -41,7 +41,7 @@
 
 </body>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>	
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>	
 
 	<script type="text/javascript">
 
@@ -51,23 +51,42 @@
 
 		//doSearch takes in the user's input and displays the drop-down suggestions
 		function doSearch(suggestions){
-			clearTimeout(delayTimer);
-			delayTimer = setTimeout(function(){
-				//here we will make the api call 
+			//here we will make the api call 
 
 				//alter inner html to 
 
 				//altering the inner HTML to update the drop-down suggestion menu
-				document.getElementById('artistlist').innerHTML = '';
+				//$('#artistlist').html('');
 
 				//iterating through the array of suggested artists to display to user
-				var appendHTML = '';
+				// var appendHTML = '';
+				var list = document.getElementById('artistlist');
 				for (var i = 0; i < suggestions.length; i++){
-					appendHTML += '<option value="' + suggestions[i] + '"></option>';
+					// appendHTML += '<option value="' + suggestions[i] + '"/>';
+					var option = document.createElement('option');
+   					option.value = suggestions[i];
+   					list.appendChild(option);
 				}
-				document.getElementById('artistlist').innerHTML = appendHTML;
-				console.log(document.getElementById('artistlist').innerHTML);
-			}, 1000);
+				//$('#artistlist').html(appendHTML);
+				console.log(list.innerHTML);
+
+			// clearTimeout(delayTimer);
+			// delayTimer = setTimeout(function(){
+			// 	//here we will make the api call 
+
+			// 	//alter inner html to 
+
+			// 	//altering the inner HTML to update the drop-down suggestion menu
+			// 	document.getElementById('artistlist').innerHTML = '';
+
+			// 	//iterating through the array of suggested artists to display to user
+			// 	var appendHTML = '';
+			// 	for (var i = 0; i < suggestions.length; i++){
+			// 		appendHTML += '<option value="' + suggestions[i] + '"/>';
+			// 	}
+			// 	document.getElementById('artistlist').innerHTML = appendHTML;
+			// 	console.log(document.getElementById('artistlist').innerHTML);
+			// }, 0);
 		}
 
 		function getSearchSuggestions(prefix) {
@@ -77,7 +96,7 @@
 		    success: function( response ) {
 		      console.log( response ); // server response
 		      var suggestions = new Array();
-		      for (var i = 0; i < 9; i++) {
+		      for (var i = 0; i < 10; i++) {
 		        console.log("Suggestion: " + response.data[i].name);
 		        suggestions.push(response.data[i].name);
 		      }
