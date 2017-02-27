@@ -25,13 +25,13 @@
 
 <form>
   <div class="form-group">
-    <label for="exampleInputEmail1"> Search </label>
-    <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter artist">
+<!--     <label for="exampleInputEmail1"> Search </label>
+ -->    <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter artist">
     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
   </div>
 
   
-  <button id=testButton type="submit" class="btn btn-primary">Submit</button>
+  <button id=testButton type="Search" class="btn btn-primary">Search</button>
 </form>
 
 
