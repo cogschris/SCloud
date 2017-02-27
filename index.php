@@ -10,11 +10,8 @@
 	</title>
 	<!-- <link rel="stylesheet" type="text/css" href="css/artistsearchstyle.css"> -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<h1> <center> Welcome to SCloud! </center></h1>
 </head>
-
-
-
-
 
 <body>
 
@@ -23,15 +20,14 @@
 	
 
 
-
-
 </div>
+
 
 <form>
   <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <label for="exampleInputEmail1"> Search </label>
+    <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter artist">
+    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
   </div>
 
   
