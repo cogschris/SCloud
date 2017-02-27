@@ -60,7 +60,8 @@
 
 				//iterating through the array of suggested artists to display to user
 				// var appendHTML = '';
-				var list = document.getElementById('artistlist');
+				document.getElementById('artistlist').innerHTML = "";
+				var list = document.getElementById('artistlist'); 
 				for (var i = 0; i < suggestions.length; i++){
 					// appendHTML += '<option value="' + suggestions[i] + '"/>';
 					var option = document.createElement('option');
