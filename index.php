@@ -31,7 +31,7 @@
   </div>
 
   
-  <button id=testButton type="submit" class="btn btn-primary">Submit</button>
+  <button id=testButton type="submit" class="btn btn-primary"> Search </button>
 </form>
 
 
