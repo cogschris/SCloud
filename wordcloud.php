@@ -24,29 +24,23 @@ function getArtists() {
 ?>
 <!DOCTYPE html>
 <html>
-<head>
-
-	<title><?php echo (getArtists()) ?></title>
-	<link href="css/styleWordCloud.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    </head>
-    <body>
-    	<div class="container-full">
-    		<div class="row">
-    			<h2> <center></center></h2>
-    		</div>
-
-    		<br>
-    		<center>
-
+	<head>
+		<title><?php echo (getArtists()) ?></title>
+		<link href="css/styleWordCloud.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	</head>
+	<body>
+		<div class="container-full">
+			<div class="row">
+				<h2> <center></center></h2>
+			</div>
+			<br>
+			<center>
 	    		<h1>Word Cloud goes here</h1>
-
 	    		<br>
 	    		<br>
 	    		<br>
-
 	    		<div id="custom-search-input">
-
 	    			<form class="search" method="post" action="index.html" >
 	    				<input type="text" name="q" placeholder="Search..." list="artistlist" onkeyup="getSearchSuggestions(this.value);" />
 	    				<datalist id="artistlist"></datalist>
@@ -58,19 +52,17 @@ function getArtists() {
 	                    </span>
 	                </div> -->
 	            </div>
-
 	            <br>
-
 	            <button class="btn btn-lg" type="button"><i class="glyphicon glyphicon-search pull-left"></i><span>Search</span></button> 
 	            <button class="btn btn-lg" href="http://dotstrap.com/"><i class="glyphicon glyphicon-list pull-left"></i><span>Add</span></button> 
 	            <button class="btn btn-lg btn-primary" href="http://dotstrap.com/"><i class="glyphicon glyphicon-user pull-left"></i><span>Share to Facebook</span></button> 
 				<br>
 				<br>
 
-           	</center>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script>
+	       	</center>
+	    </div>
+	    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	    <script>
 
 	        /* When the user clicks on the button,
 	        toggle between hiding and showing the dropdown content */
@@ -130,6 +122,6 @@ function getArtists() {
 		          	}
 		      	});
 	      	}
-    	</script>
+		</script>
 	</body>
 </html>
