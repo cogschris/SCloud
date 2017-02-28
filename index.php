@@ -33,7 +33,7 @@
 	    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
 	  </div>
 
-	  <button onclick = "window.location.href='songListPage.php'" id=testButton type="search" class="btn pull-right" style ="position: absolute; right: 0;"> Search </button>
+	  <button id=searchButton type="search" class="btn pull-right" style ="position: absolute; right: 0;"> Search </button>
 	<!--   <script type = "text/javascript">
 	  	document.getElementbyID("testButton").onClick = function () {
 	  		location.href = "songListPage.php";
@@ -113,43 +113,44 @@
 		  });
 		}
 
-		// $('#testButton').click(function(event){
-
-		// 	event.preventDefault();
-
-		// 	var myData = {	
-		// 		name: $('#exampleInputEmail1').val(),
-		// 	}
-
-		// 	$.ajax({
-				
-
-		// 		url: "searchArtists.php",
-		// 		data: myData
-
-				
-		// 	})
-		// 	.done(function(data) {
-
-
-		// 		// console.log($('#test'));
-
-		// 		$('#testDiv').html(data);
-				
-		// 		// console.log(data);
-
-
-		// 	}).fail(function(response){
-
-
-
-		// 	});
-
 		$('#searchButton').click(function(event){
 
+			event.preventDefault();
+
+			var myData = {	
+				name: $('#artistListInput').val(),
+			}
+
+			$.ajax({
+				
+
+				url: "wordcloud.php",
+				data: myData
+
+				
+			})
+			.done(function(data) {
 
 
-		})
+				// console.log($('#test'));
+
+				window.location.href = "wordcloud.php";
+				
+				// console.log(data);
+
+
+			}).fail(function(response){
+
+
+
+			});
+		});
+
+		// $('#searchButton').click(function(event){
+
+
+
+		// })
 
 
 	</script>
