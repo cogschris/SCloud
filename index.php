@@ -57,43 +57,24 @@
 
 		//doSearch takes in the user's input and displays the drop-down suggestions
 		function doSearch(suggestions){
-			//here we will make the api call 
 
-				//alter inner html to 
+			//alter inner html to 
 
-				//altering the inner HTML to update the drop-down suggestion menu
-				//$('#artistlist').html('');
+			//altering the inner HTML to update the drop-down suggestion menu
+			//$('#artistlist').html('');
 
-				//iterating through the array of suggested artists to display to user
-				// var appendHTML = '';
-				document.getElementById('artistlist').innerHTML = "";
-				var list = document.getElementById('artistlist'); 
-				for (var i = 0; i < suggestions.length; i++){
-					// appendHTML += '<option value="' + suggestions[i] + '"/>';
-					var option = document.createElement('option');
-   					option.value = suggestions[i];
-   					list.appendChild(option);
-				}
-				//$('#artistlist').html(appendHTML);
-				console.log(list.innerHTML);
-
-			// clearTimeout(delayTimer);
-			// delayTimer = setTimeout(function(){
-			// 	//here we will make the api call 
-
-			// 	//alter inner html to 
-
-			// 	//altering the inner HTML to update the drop-down suggestion menu
-			// 	document.getElementById('artistlist').innerHTML = '';
-
-			// 	//iterating through the array of suggested artists to display to user
-			// 	var appendHTML = '';
-			// 	for (var i = 0; i < suggestions.length; i++){
-			// 		appendHTML += '<option value="' + suggestions[i] + '"/>';
-			// 	}
-			// 	document.getElementById('artistlist').innerHTML = appendHTML;
-			// 	console.log(document.getElementById('artistlist').innerHTML);
-			// }, 0);
+			//iterating through the array of suggested artists to display to user
+			// var appendHTML = '';
+			document.getElementById('artistlist').innerHTML = "";
+			var list = document.getElementById('artistlist'); 
+			for (var i = 0; i < suggestions.length; i++){
+				// appendHTML += '<option value="' + suggestions[i] + '"/>';
+				var option = document.createElement('option');
+					option.value = suggestions[i];
+					list.appendChild(option);
+			}
+			//$('#artistlist').html(appendHTML);
+			console.log(list.innerHTML);
 		}
 
 		function getSearchSuggestions(prefix) {
@@ -107,7 +88,10 @@
 		        console.log("Suggestion: " + response.data[i].name);
 		        suggestions.push(response.data[i].name);
 		      }
-		      doSearch(suggestions);
+		      clearTimeout(delayTimer);
+		      setTimeout(function(){
+		      	doSearch(suggestions);
+		      }, 2500);
 		      //return suggestions;
 		    }
 		  });
