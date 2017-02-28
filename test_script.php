@@ -81,7 +81,7 @@
     </style>
   </head>
   <body>
-  	<!-- <?php echo join(', ', $_SESSION['favorites']); ?> -->
+  	<?php echo join(', ', $_SESSION['favorites']); ?>
     <div id="blog-posts">
       <div id="blog-post-101" class="blog-post <?php if (is_favorite(101)) { echo 'favorite'; } ?>">
       <span class="favorite-heart">&hearts;</span>
