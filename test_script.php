@@ -1,5 +1,5 @@
 <?php
-  require_once('classes.php');
+  require_once('Word.php');
   session_start();
 
   if(!isset($_SESSION['favorites'])) { 

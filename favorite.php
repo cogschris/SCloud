@@ -1,6 +1,6 @@
 <?php
 
-require_once('classes.php');
+require_once('Word.php');
 session_start();
 
 if (!isset($_SESSION['favorites'])) {
@@ -32,8 +32,9 @@ if (preg_match("/blog-post-(\d+)/", $raw_id, $matches)) {
 		$wordObject->addSong('Baby');
 	}
 
-	$json = json_encode($_SESSION['words']);
-	echo $json;
+	// $json = json_encode($_SESSION['words']);
+	// echo $json;
+	echo 'true';
 
 } else {
 	echo 'false';
