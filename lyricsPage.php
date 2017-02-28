@@ -12,10 +12,10 @@
 
 		<script>
 			$(document).ready(function() {
-				getSearchSuggestions("Drake");
-				getArtistImage("Drake");
-				getSongList("Drake");
-				setLyrics("Hotline Bling");
+				// getSearchSuggestions("Drake");
+				// getArtistImage("Drake");
+				// getSongList("Drake");
+				setLyrics("Hotline Bling", "Drake");
 			});
 		</script>
 
