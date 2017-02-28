@@ -256,13 +256,16 @@ function getLyrics(tracks, artist, index, ret) {
     dataType: "jsonp",
     success: function( response ) {
       console.log( response ); // server response
-      var str = response.message.body.lyrics.lyrics_body
-      str = str.substring(0, str.indexOf("*"));
-      ret.words = ret.words + str + " ";
+      if (response.message.body.length != 0) {
+        var str = response.message.body.lyrics.lyrics_body
+        str = str.substring(0, str.indexOf("*"));
+        ret.words = ret.words + str + " ";
+      }
       index++;
       if (index == tracks.length) {
         items = lyricsToWords(ret.words);
         console.log(items);
+        myFunction(items);
       } else {
         getLyrics(tracks, artist, index, ret);
       }
@@ -271,12 +274,13 @@ function getLyrics(tracks, artist, index, ret) {
 }
 
 function lyricsToWords(lyrics) {
-  var arr = lyrics.split(/[().,\n\s]/g);
+  lyrics = lyrics.toLowerCase();
+  var arr = lyrics.split(/[().,;!?\[\]\n\s]/g);
   var dict = {};
   for (i = 0; i < arr.length; i++) {
     var stop = false;
     for (j = 0; j < stop_words.length; j++) {
-      if (arr[i].toLowerCase() === stop_words[j]) {
+      if (arr[i] === stop_words[j]) {
         stop = true;
         break;
       }
@@ -313,4 +317,66 @@ function setLyrics(track, artist) {
       //setLyricsFromID(response.message.body.track_list[0].track.track_id);
     }
   });
+}
+
+
+
+
+
+
+
+
+function myFunction(arr) {
+
+    //Different font sizes
+    var fontSizes = [ "10px", "20px", "30px", "40px", "50px", "60px", "70px", "80px", "90px", "100px"];
+
+    var big_freq = arr[0][1]; //the number of the biggest frequency goes here
+
+    for(count = 0; count < arr.length; count++){//Change this to iterate through the loop
+
+        var freq = arr[count][1]; //frequency of word you working on
+
+        var t = document.createTextNode(arr[count][0] + " "); //creating the text node
+
+        var span = document.createElement('span');//creating a span
+
+        var calc = freq/big_freq;
+        if (calc <= 1 && calc > .875) {
+            span.style.fontSize = fontSizes[8];
+        }
+        else if (calc <= .875 && calc > .75) {
+            span.style.fontSize = fontSizes[7];
+        }
+        else if (calc <= .75 && calc > .625) {
+            span.style.fontSize = fontSizes[6];
+        }
+        else if (calc <= .625 && calc > .50) {
+            span.style.fontSize = fontSizes[5];
+        }
+        else if (calc <= .50 && calc > .375) {
+            span.style.fontSize = fontSizes[4];
+        }
+        else if (calc <= .375 && calc > .25) {
+            span.style.fontSize = fontSizes[3];
+        }
+        else if (calc <= .25 && calc > .125) {
+            span.style.fontSize = fontSizes[2];
+        }
+        else if (calc <= .125 && calc > .0) {
+            span.style.fontSize = fontSizes[1];
+        }
+
+        span.style.color = getRandomColor(); //changing color
+        span.appendChild(t); //adding text to span
+        document.getElementById("something").appendChild(span);//adding span to element
+    }
+}
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 }
