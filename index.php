@@ -85,6 +85,7 @@ if(!isset($_SESSION['currentSong'])) {
 
 				request.done(function(msg) {
 					console.log("Result: " + msg);
+					window.location.href = "wordcloud.php";
 				});
 			})
 
