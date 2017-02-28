@@ -26,8 +26,7 @@
 <form>
   <div class="form-group">
 
-  
-  <button id=testButton type="Search" class="btn btn-primary"> Search </button>
+    <button id=searchButton type="Search" class="btn btn-primary"> Search </button>
 
    <input class="form-control" id="searchInput" aria-describedby="emailHelp" placeholder="Enter artist">
     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
@@ -51,37 +50,7 @@
 
 	<script type="text/javascript">
 		
-		$('#testButton').click(function(event){
-
-			event.preventDefault();
-
-			var myData = {
-				name: $('#exampleInputEmail1').val(),
-			}
-
-			$.ajax({
-				
-
-				url: "searchArtists.php",
-				data: myData
-
-				
-			})
-			.done(function(data) {
-
-
-				// console.log($('#test'));
-
-				$('#testDiv').html(data);
-				
-				// console.log(data);
-
-
-			}).fail(function(response){
-
-
-
-			});
+		$('#searchButton').click(function(event){
 
 
 		})
