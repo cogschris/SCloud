@@ -30,14 +30,10 @@ and open the template in the editor.
         <div id="custom-search-input">
 
          <form class="search" method="post" action="index.html" >
-         <input type="text" name="q" placeholder="Search..." />
-         <ul class="results" >
-             <li><a href="index.html">Search Result #1<br /><span>Description...</span></a></li>
-             <li><a href="index.html">Search Result #2<br /><span>Description...</span></a></li>
-            <li><a href="index.html">Search Result #3<br /><span>Description...</span></a></li>
-            <li><a href="index.html">Search Result #4</a></li>
-         </ul>
-     </form>
+           <input type="text" name="q" placeholder="Search..." list="artistlist" onkeyup="getSearchSuggestions(this.value);" />
+           <datalist id="artistlist">
+           </datalist>
+          </form>
                 <!-- <div class="input-group col-md-12">
                     <input type="text" class="form-control input-lg" placeholder="Artists" />
                     <span class="input-group-btn">
@@ -45,30 +41,6 @@ and open the template in the editor.
                     </span>
                 </div> -->
             </div>
-         
-
-<script>
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-function filterFunction() {
-    var input, filter, ul, li, a, i;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    div = document.getElementById("myDropdown");
-    a = div.getElementsByTagName("a");
-    for (i = 0; i < a.length; i++) {
-        if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-            a[i].style.display = "";
-        } else {
-            a[i].style.display = "none";
-        }
-    }
-}
-</script>
 
         <br>
        
@@ -90,5 +62,68 @@ function filterFunction() {
             
     </center>
         </div>
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+        <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        function filterFunction() {
+            var input, filter, ul, li, a, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            div = document.getElementById("myDropdown");
+            a = div.getElementsByTagName("a");
+            for (i = 0; i < a.length; i++) {
+                if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    a[i].style.display = "";
+                } else {
+                    a[i].style.display = "none";
+                }
+            }
+        }
+
+
+        var delayTimer;
+
+        function doSearch(suggestions){
+          console.log('called after set time');
+          document.getElementById('artistlist').innerHTML = "";
+          var list = document.getElementById('artistlist'); 
+          for (var i = 0; i < suggestions.length; i++){
+            // appendHTML += '<option value="' + suggestions[i] + '"/>';
+            var option = document.createElement('option');
+            option.value = suggestions[i];
+            list.appendChild(option);
+          }
+          //$('#artistlist').html(appendHTML);
+          console.log(list.innerHTML);
+        }
+
+        function getSearchSuggestions(prefix) {
+          $.ajax({
+            url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(prefix) + "&limit=10",
+            dataType: "json",
+            success: function( response ) {
+              console.log( response ); // server response
+              var suggestions = new Array();
+              for (var i = 0; i < 10; i++) {
+                console.log("Suggestion: " + response.data[i].name);
+                suggestions.push(response.data[i].name);
+              }
+              clearTimeout(delayTimer);
+              delayTimer = setTimeout(function(){
+                doSearch(suggestions);
+              }, 3500);
+              //doSearch(suggestions);
+              //return suggestions;
+            }
+          });
+        }
+        </script>
     </body>
 </html>

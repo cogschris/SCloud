@@ -61,8 +61,13 @@ if(!isset($_SESSION['currentSong'])) {
 			        		// console.log("Suggestion: " + response.data[i].name);
 			        		suggestions.push(response.data[i].name);
 			        	}
-			        	doSearch(suggestions);
+			        	// clearTimeout(delayTimer);
+			        	// setTimeout(function () {
+			        	// 	doSearch(suggestions);
+			        	// }, 2500);
 			      		//return suggestions;
+			      		doSearch(suggestions);
+
 			      	}
 			      });
 			}
