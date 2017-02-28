@@ -35,7 +35,7 @@
   </div>
 
   
-  <button id=testButton type="Search" class="btn btn-primary"> Search </button>
+  <button id=searchButton type="Search" class="btn btn-primary"> Search </button>
 </form>
 
 
@@ -106,7 +106,7 @@
 		    }
 		  });
 		}
-		
+
 		$('#testButton').click(function(event){
 
 			event.preventDefault();
@@ -138,6 +138,9 @@
 
 
 			});
+
+		$('#searchButton').click(function(event){
+
 
 
 		})
