@@ -17,7 +17,13 @@ if(!isset($_SESSION['currentSong'])) {
 
 function getArtists() {
 	if (!is_null($_SESSION['artists'][0])) {
-		return $_SESSION['artists'][0];
+		$artists;
+
+		foreach ($_SESSION['artists'] as &$artist) {
+    		$artists .= $artist . " ";
+		}
+
+		return $artists;
 	}
 }
 
@@ -25,7 +31,7 @@ function getArtists() {
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><?php echo (getArtists()) ?></title>
+		<title id="title"><?php echo (getArtists()) ?></title>
 		<link href="css/styleWordCloud.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	</head>
@@ -126,8 +132,7 @@ function getArtists() {
 	      	// Generate a new webpage with single artist in input field?
 	      	$(".search-button").click(function () {
 
-
-			})
+	      	})
 
 	      	$(".add-button").click(function () {
 
@@ -141,10 +146,11 @@ function getArtists() {
 				});
 
 				request.done(function(msg) {
+					document.title = msg;
 					console.log("Result: " + msg);
 				});
-
 			})
+
 		</script>
 	</body>
 </html>

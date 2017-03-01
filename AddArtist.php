@@ -23,7 +23,12 @@ if (!in_array($raw_word, $_SESSION['artists'])) {
 	$_SESSION['artists'][] = $raw_word;
 }
 
-$json = json_encode($_SESSION['artists']);
-echo ($json);
+$artists;
+
+foreach ($_SESSION['artists'] as &$artist) {
+	$artists .= $artist . " ";
+}
+
+echo $artists;
 
 ?>
