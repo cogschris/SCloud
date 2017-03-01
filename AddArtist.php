@@ -17,10 +17,10 @@ if(!isset($_SESSION['currentSong'])) {
 }
 
 // Extract raw word
-$raw_word = isset($_POST['word']) ? $_POST['word'] : '';
+$raw_artist = isset($_POST['artist']) ? $_POST['artist'] : '';
 
-if (!in_array($raw_word, $_SESSION['artists'])) {
-	$_SESSION['artists'][] = $raw_word;
+if (!in_array($raw_artist, $_SESSION['artists'])) {
+	$_SESSION['artists'][] = $raw_artist;
 }
 
 $artists;
