@@ -148,6 +148,8 @@ function getArtists() {
 					document.title = msg;
 					console.log("Result: " + msg);
 				});
+
+				inputField.value = "";
 			})
 
 		</script>
