@@ -31,7 +31,7 @@ if(!isset($_SESSION['currentSong'])) {
 			<input class="form-control" id="input-text" list="artistlist" onkeypress="getSearchSuggestions(this.value);" aria-describedby="emailHelp" placeholder="Enter Artist" autocomplete="off"></input>
 			<datalist id="artistlist"></datalist>
 		</div>
-		<button class="add-button btn pull-right" type="search" style="position: absolute; right: 0;"> Search </button>
+		<button class="search-button btn pull-right" type="search" style="position: absolute; right: 0;"> Search </button>
 		<script type="text/javascript">
 
 			// This variable keeps track of the Timer for searches
@@ -72,7 +72,7 @@ if(!isset($_SESSION['currentSong'])) {
 			      });
 			}
 
-			$(".add-button").click(function () {
+			$(".search-button").click(function () {
 
 				var inputField = document.getElementById("input-text");
 

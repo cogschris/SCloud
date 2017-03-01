@@ -42,7 +42,7 @@ function getArtists() {
 	    		<br>
 	    		<div id="custom-search-input">
 	    			<form class="search" method="post" action="index.html" >
-	    				<input type="text" name="q" placeholder="Search..." list="artistlist" onkeyup="getSearchSuggestions(this.value);" />
+	    				<input id="input-text" type="text" name="q" placeholder="Search..." list="artistlist" onkeyup="getSearchSuggestions(this.value);" />
 	    				<datalist id="artistlist"></datalist>
 	    			</form>
 	                <!-- <div class="input-group col-md-12">
@@ -53,8 +53,8 @@ function getArtists() {
 	                </div> -->
 	            </div>
 	            <br>
-	            <button class="btn btn-lg" type="button"><i class="glyphicon glyphicon-search pull-left"></i><span>Search</span></button> 
-	            <button class="btn btn-lg" href="http://dotstrap.com/"><i class="glyphicon glyphicon-list pull-left"></i><span>Add</span></button> 
+	            <button class="search-button btn btn-lg" type="button"><i class="glyphicon glyphicon-search pull-left"></i><span>Search</span></button> 
+	            <button class="add-button btn btn-lg" href="http://dotstrap.com/"><i class="glyphicon glyphicon-list pull-left"></i><span>Add</span></button> 
 	            <button class="btn btn-lg btn-primary" href="http://dotstrap.com/"><i class="glyphicon glyphicon-user pull-left"></i><span>Share to Facebook</span></button> 
 				<br>
 				<br>
@@ -89,7 +89,7 @@ function getArtists() {
 	        var delayTimer;
 
 	        function doSearch(suggestions){
-	        	console.log('called after set time');
+	        	//console.log('called after set time');
 	        	document.getElementById('artistlist').innerHTML = "";
 	        	var list = document.getElementById('artistlist'); 
 	        	for (var i = 0; i < suggestions.length; i++){
@@ -99,7 +99,7 @@ function getArtists() {
 	            	list.appendChild(option);
 	        	}
 	          	//$('#artistlist').html(appendHTML);
-	          	console.log(list.innerHTML);
+	          	//console.log(list.innerHTML);
 	      	}
 
 	      	function getSearchSuggestions(prefix) {
@@ -107,10 +107,10 @@ function getArtists() {
 		      		url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(prefix) + "&limit=10",
 		      		dataType: "json",
 		      		success: function( response ) {
-		              console.log( response ); // server response
+		             // console.log( response ); // server response
 		              var suggestions = new Array();
 		              for (var i = 0; i < 10; i++) {
-		              	console.log("Suggestion: " + response.data[i].name);
+		              	//console.log("Suggestion: " + response.data[i].name);
 		              	suggestions.push(response.data[i].name);
 		              }
 		              clearTimeout(delayTimer);
@@ -122,6 +122,29 @@ function getArtists() {
 		          	}
 		      	});
 	      	}
+
+	      	// Generate a new webpage with single artist in input field?
+	      	$(".search-button").click(function () {
+
+
+			})
+
+	      	$(".add-button").click(function () {
+
+	      		var inputField = document.getElementById("input-text");
+
+				var request = $.ajax({
+					url: "AddArtist.php",
+					type: "POST",
+					data: {word : inputField.value},
+					dataType: "text"
+				});
+
+				request.done(function(msg) {
+					console.log("Result: " + msg);
+				});
+
+			})
 		</script>
 	</body>
 </html>
