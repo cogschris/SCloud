@@ -34,6 +34,7 @@ function getArtists() {
 		<title id="title"><?php echo (getArtists()) ?></title>
 		<link href="css/styleWordCloud.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	</head>
 	<body>
 		<div class="container-full">
@@ -48,8 +49,8 @@ function getArtists() {
 	    		<br>
 	    		<div id="custom-search-input">
 	    			<form class="search" method="post" action="index.html" >
-	    				<input id="input-text" type="text" name="q" placeholder="Search..." list="artistlist" onkeyup="getSearchSuggestions(this.value);" />
-	    				<datalist id="artistlist"></datalist>
+						<input class="form-control" id="input-text" list="artistlist" onkeypress="getSearchSuggestions(this.value);" aria-describedby="emailHelp" placeholder="Enter Artist" autocomplete="off"></input>
+						<datalist id="artistlist"></datalist>
 	    			</form>
 	                <!-- <div class="input-group col-md-12">
 	                    <input type="text" class="form-control input-lg" placeholder="Artists" />
@@ -67,8 +68,7 @@ function getArtists() {
 
 	       	</center>
 	    </div>
-	    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	    <script>
+	    <script type="text/javascript">
 
 	        /* When the user clicks on the button,
 	        toggle between hiding and showing the dropdown content */
@@ -93,41 +93,40 @@ function getArtists() {
 
 
 	        var delayTimer;
+			// doSearch takes in the user's input and displays the drop-down suggestions
+			function doSearch(suggestions){
 
-	        function doSearch(suggestions){
-	        	//console.log('called after set time');
-	        	document.getElementById('artistlist').innerHTML = "";
-	        	var list = document.getElementById('artistlist'); 
-	        	for (var i = 0; i < suggestions.length; i++){
-	            	// appendHTML += '<option value="' + suggestions[i] + '"/>';
-	            	var option = document.createElement('option');
-	            	option.value = suggestions[i];
-	            	list.appendChild(option);
-	        	}
-	          	//$('#artistlist').html(appendHTML);
-	          	//console.log(list.innerHTML);
-	      	}
+				document.getElementById('artistlist').innerHTML = "";
+				var list = document.getElementById('artistlist'); 
+				for (var i = 0; i < suggestions.length; i++){
+					// appendHTML += '<option value="' + suggestions[i] + '"/>';
+					var option = document.createElement('option');
+					option.value = suggestions[i];
+					list.appendChild(option);
+				}
+			}
 
-	      	function getSearchSuggestions(prefix) {
-		      	$.ajax({
-		      		url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(prefix) + "&limit=10",
-		      		dataType: "json",
-		      		success: function( response ) {
-		             // console.log( response ); // server response
-		              var suggestions = new Array();
-		              for (var i = 0; i < 10; i++) {
-		              	//console.log("Suggestion: " + response.data[i].name);
-		              	suggestions.push(response.data[i].name);
-		              }
-		              clearTimeout(delayTimer);
-		              delayTimer = setTimeout(function(){
-		              	doSearch(suggestions);
-		              }, 3500);
-		              //doSearch(suggestions);
-		              //return suggestions;
-		          	}
-		      	});
-	      	}
+			function getSearchSuggestions(prefix) {
+				$.ajax({
+					url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(prefix) + "&limit=10",
+					dataType: "json",
+					success: function( response ) {
+			   			// console.log( response ); // server response
+			   			var suggestions = new Array();
+			   			for (var i = 0; i < 10; i++) {
+			        		// console.log("Suggestion: " + response.data[i].name);
+			        		suggestions.push(response.data[i].name);
+			        	}
+			        	// clearTimeout(delayTimer);
+			        	// setTimeout(function () {
+			        	// 	doSearch(suggestions);
+			        	// }, 2500);
+			      		//return suggestions;
+			      		doSearch(suggestions);
+
+			      	}
+			      });
+			}
 
 	      	// Generate a new webpage with single artist in input field?
 	      	$(".search-button").click(function () {
