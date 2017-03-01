@@ -141,7 +141,7 @@ function getArtists() {
 				var request = $.ajax({
 					url: "AddArtist.php",
 					type: "POST",
-					data: {word : inputField.value},
+					data: {artist : inputField.value},
 					dataType: "text"
 				});
 
