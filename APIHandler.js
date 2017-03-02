@@ -355,7 +355,6 @@ function getArtistImage(artist) {
           if (artist_index < artists.length) {
             return getArtistID3(artists, artist_index, ret, word);
           } else {
-<<<<<<< HEAD
             ret.songs.sort(function(first, second){
               return second[1] - first[1];
             });
@@ -367,7 +366,7 @@ function getArtistImage(artist) {
               var currSong = ret.songs[i];
               if (newArray.indexOf(currSong[0]) == -1){
                 newArray.push(currSong[0]);
-                output += '<tr class="selectedSong"><td>' + currSong[0] + ' (' + currSong[1] + ') - ' + currSong[2] + '</td></tr>' ;
+                output += '<tr class="selectedSong"><td  onclick="songSelected(this.innerHTML);">' + currSong[0] + ' (' + currSong[1] + ') - ' + currSong[2] + '</td></tr>' ;
               } 
             }
             console.log(output);

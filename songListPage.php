@@ -111,9 +111,32 @@ function getWord() {
 
       })
 
+
       $('#backToWCButton').click(function() {
         window.location.href = "wordcloud.php";
       })
+
+      function songSelected(word) {
+        var index = word.indexOf('(');
+        var artist = word.substring(0, index);
+        artist = artist.trim();
+        index = word.indexOf('-');
+        var song = word.substring(index + 1);
+        song = song.trim()
+        console.log(artist + " " + song);
+
+        var request = $.ajax({
+          url: "SetCurrentSongAndArtist.php",
+          type: "POST",
+          data: {artist : artist, song : song},
+          dataType: "text"
+        });
+
+        request.done(function(msg) {
+          console.log("Result: " + msg);
+        });
+
+      }
     </script>
   </body>
 </html>
