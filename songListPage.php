@@ -57,7 +57,7 @@ function getWord() {
        
           <thead>
             <tr>
-              <th> Song (frequency of word) </th>
+              <th> Song (Word Frequency) </th>
             </tr>
           </thead>
 
@@ -109,6 +109,10 @@ function getWord() {
           });
         }
 
+      })
+
+      $('#backToWCButton').click(function() {
+        window.location.href = "wordcloud.php";
       })
     </script>
   </body>
