@@ -21,7 +21,7 @@
 		<div class = "container-full">
 
 			<div class = "row">
-				<div class = "col-xs-4 col-xs-offset-4">
+				<div class = "col-xs-10 col-xs-offset-1">
 					<h1 id="title_lyrics_page"></h1>
 					<script>
 						

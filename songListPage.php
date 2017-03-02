@@ -118,11 +118,11 @@ function getWord() {
 
       function songSelected(word) {
         var index = word.indexOf('(');
-        var artist = word.substring(0, index);
-        artist = artist.trim();
+        var song = word.substring(0, index);
+        song = song.trim();
         index = word.indexOf('-');
-        var song = word.substring(index + 1);
-        song = song.trim()
+        var artist = word.substring(index + 1);
+        artist = artist.trim()
         console.log(artist + " " + song);
 
         var request = $.ajax({
@@ -133,7 +133,7 @@ function getWord() {
         });
 
         request.done(function(msg) {
-          console.log("Result: " + msg);
+          window.location.href = "lyricsPage.php";
         });
 
       }

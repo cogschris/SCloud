@@ -464,9 +464,11 @@ function setLyrics(track, artist) {
     dataType: "jsonp",
     success: function( response ) {
       console.log( response ); // server response
-      var str = response.message.body.lyrics.lyrics_body;
-      $("#lyrics").append(str.substring(0, str.indexOf("*")));
-      //setLyricsFromID(response.message.body.track_list[0].track.track_id);
+      if (response.message.body.length != 0) {
+        var str = response.message.body.lyrics.lyrics_body;
+        $("#lyrics").append(str.substring(0, str.indexOf("*")));
+        //setLyricsFromID(response.message.body.track_list[0].track.track_id);
+      }
     }
   });
 }
