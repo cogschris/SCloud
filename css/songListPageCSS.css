@@ -8,7 +8,26 @@
 
 .container-full
 {
-	background-color: #bababa;
-	height: 800px;
+	background-color: #d9d9d9;
+	height: 1000px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+#backToWCButton {
+	color: white;
+	background-color: #c53fff;
+}
+
+#songListHeader {
 	color: #c53fff;
 }
+
+#songListTable{
+	color: #c53fff;
+}
+
+
+#buttonrow {
+	text-align: center;
+}
+
