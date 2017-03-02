@@ -307,7 +307,7 @@ function getArtistImage(artist) {
 
   function getSongsFromWord(artists, word) {
     var ret = {songs: []};
-    getArtistID3(artists, 0, ret, word);
+    return getArtistID3(artists, 0, ret, word);
   }
 
   function getArtistID3(artists, index, ret, word) {
@@ -316,7 +316,7 @@ function getArtistImage(artist) {
       dataType: "json",
       success: function( response ) {
         console.log( response ); // server response
-        getSongListFromID3(response.data[0].id, artists, index, ret, word);
+        return getSongListFromID3(response.data[0].id, artists, index, ret, word);
       }
     });
   }
@@ -327,7 +327,7 @@ function getArtistImage(artist) {
       dataType: "json",
       success: function( response ) {
         console.log( response );
-        getLyrics3(response.data, artists, index, 0, ret, word);
+        return getLyrics3(response.data, artists, index, 0, ret, word);
       }
     });
   }
@@ -344,19 +344,22 @@ function getArtistImage(artist) {
           str = str.substring(0, str.indexOf("*"));
           count = checkForWord(str, word);
           if (count > 0) {
-            ret.songs.push(tracks[song_index].title);
+            var song_title = tracks[song_index].title;
+            var arr = {song_title, count};
+            ret.songs.push(arr);
           }
         }
         song_index++;
         if (song_index == tracks.length) {
           artist_index++;
           if (artist_index < artists.length) {
-            getArtistID3(artists, artist_index, ret, word);
+            return getArtistID3(artists, artist_index, ret, word);
           } else {
             console.log(ret.songs);
+            return ret.songs;
           }
         } else {
-          getLyrics3(tracks, artists, artist_index, song_index, ret, word);
+          return getLyrics3(tracks, artists, artist_index, song_index, ret, word);
         }
       }
     });
@@ -487,8 +490,9 @@ function getFrequency(track, artist, word) {
   });
 }
 
-
-
+/**
+ *  Functions for making the word cloud:
+ */
 
 function myFunction(arr) {
 
@@ -557,6 +561,10 @@ function getRandomColor() {
     }
     return color;
 }
+
+/**
+ *  Function for shuffling word cloud array:
+ */
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
