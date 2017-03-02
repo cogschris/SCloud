@@ -32,6 +32,7 @@ function getArtists() {
 <html>
 	<head>
 		<title id="title"><?php echo (getArtists()) ?></title>
+		<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 		<link href="css/styleWordCloud.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -47,11 +48,11 @@ function getArtists() {
 	    		<br>
 	    		<br>
 	    		<br>
-	    		<div id="custom-search-input">
-	    			<form class="search" method="post" action="index.html" >
+	    		<div class = "form-group">
+	    			<!-- <form class="search" method="post" action="index.html" > -->
 						<input class="form-control" id="input-text" list="artistlist" onkeypress="getSearchSuggestions(this.value);" aria-describedby="emailHelp" placeholder="Enter Artist" autocomplete="off"></input>
 						<datalist id="artistlist"></datalist>
-	    			</form>
+	    			<!-- </form> -->
 	                <!-- <div class="input-group col-md-12">
 	                    <input type="text" class="form-control input-lg" placeholder="Artists" />
 	                    <span class="input-group-btn">
