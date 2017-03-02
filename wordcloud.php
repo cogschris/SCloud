@@ -40,8 +40,34 @@ function getArtists() {
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script src="APIHandler.js"></script>
+
+		
+
+		<!-- <script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=58b7aed21360990012d4811b&product=inline-share-buttons"></script> -->
+
+		<meta property="og:site_name" content="Scotch">
+		<meta property="og:url" content="wordcloud.php">  
+		<meta property="og:type" content="website"> 
+
+		<meta property="og:title" content="Scotch Web Development">
+		<meta property="og:description" content="Scotch is a web development blog discussing all things programming, development, web, and life.">
+		<meta property="og:image" content="https://ibin.co/3E8xnkDQhCZR.jpg">
+		<meta property="fb:app_id" content="1389892087910588">
+		<meta property="fb:admins" content="579622216,709634581">
+
+
 	</head>
 	<body>
+
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+  	var js, fjs = d.getElementsByTagName(s)[0];
+ 	 if (d.getElementById(id)) return;
+ 		 js = d.createElement(s); js.id = id;
+  		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+ 	 	fjs.parentNode.insertBefore(js, fjs);
+	}	(document, 'script', 'facebook-jssdk'));</script>
+
 		<div class="container-full">
 			<div class="row">
 				<h2> <center></center></h2>
@@ -67,9 +93,34 @@ function getArtists() {
 	            <br>
 	            <button class="search-button btn btn-lg" type="button"><i class="glyphicon glyphicon-search pull-left"></i><span>Search</span></button> 
 	            <button class="add-button btn btn-lg" href="http://dotstrap.com/"><i class="glyphicon glyphicon-list pull-left"></i><span>Add</span></button> 
-	            <button class="btn btn-lg btn-primary" href="http://dotstrap.com/"><i class="glyphicon glyphicon-user pull-left"></i><span>Share to Facebook</span></button> 
-				<br>
-				<br>
+
+	           <!--  <button class="btn btn-lg btn-primary" href="http://dotstrap.com/"><i class="glyphicon glyphicon-user pull-left"></i><span>Share to Facebook</span></button>  -->
+
+
+
+
+							<div class="fb-share-button" data-href="https://ibin.co/3E8xnkDQhCZR.jpg " data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href=https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+
+ 
+
+
+	           <!--  Load Facebook SDK for JavaScript -->
+					  <!-- <div id="fb-root"></div>
+						  <script>(function(d, s, id) {
+						    var js, fjs = d.getElementsByTagName(s)[0];
+						    if (d.getElementById(id)) return;
+						    js = d.createElement(s); js.id = id;
+						    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
+						    fjs.parentNode.insertBefore(js, fjs);
+						  }(document, 'script', 'facebook-jssdk'));</script>  -->
+
+						  <!-- Your share button code -->
+				<!--		  <div class="fb-share-button" 
+						    data-href="wordcloud.php" 
+						    data-layout="button_count">
+						  </div>
+										<br>
+										<br>  -->
 
 	       	</center>
 	    </div>
