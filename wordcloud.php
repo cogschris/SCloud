@@ -43,6 +43,8 @@ function getArtists() {
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script src="APIHandler.js"></script>
+		<script src="html2canvas.js"></script>
+		<script src="FileSaver.js"></script>
 
 		
 
@@ -101,27 +103,25 @@ function getArtists() {
 	           <!--  <button class="btn btn-lg btn-primary" href="http://dotstrap.com/"><i class="glyphicon glyphicon-user pull-left"></i><span>Share to Facebook</span></button>  -->
 
 
-
-				<div class="fb-share-button" id="fb_button" 
-					data-href="https://ibin.co/3E8xnkDQhCZR.jpg " 
+	           	<!-- This creates a button that will share what is at data-href to facebook, unfortunatley we can not get the clicked event when it is a div, only as a button can we get the event when this is a button but then the fb dialog doesn't appear. -->
+				<div class="fb-share-button" id="fb_button"
+					data-href="https://ibin.co/3EAfvQZC7rLE.png" 
 					data-layout="button" data-size="large" 
-					data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" 
-					target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+					data-mobile-iframe="true">
+						<a class="fb-xfbml-parse-ignore" 
+					target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>
+					
+					</div>
 
  
-				<script type="text/javascript">
-					
-					$(".fb-share-button").click(function(){
-						console.log("button is clicked");
-						var div = document.getElementById('lyricsDiv');
-						html2canvas((div), {
-							onrendered: function(canvas){
-								var img = canvas.toDataURL("image/png");
-								downloadURI("data:" + img, "yourImage.png");
-							}
+				<!-- <script type="text/javascript">
+
+
+					$(document).ready(function(){
+						
 					});
-			});
-				</script>
+						
+				</script> -->
 
 	           <!--  Load Facebook SDK for JavaScript -->
 					  <!-- <div id="fb-root"></div>
@@ -148,6 +148,7 @@ function getArtists() {
 	    $(document).ready(function() {
 			
 			generateWordCloud();
+
 
 	        /* When the user clicks on the button,
 	        toggle between hiding and showing the dropdown content */
@@ -234,6 +235,27 @@ function getArtists() {
 
 				inputField.value = "";
 			})
+
+	      	function downloadURI(uri, name) {
+		        var link = document.createElement("a");
+		        link.download = name;
+		        link.href = uri;
+		        document.body.appendChild(link);
+		        link.click(); 
+    		}
+
+			$("#fb_button").click(function(){
+				console.log("button is clicked");
+				// window.open("https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse");
+				var div = document.getElementById('something');
+				html2canvas((div), {
+					onrendered: function(canvas){
+						console.log("on rendered called");
+						var img = canvas.toDataURL("image/png");
+						downloadURI("data:" + img, "yourImage.png");
+					}
+				});
+			});
 	    });
 
 	    var delayTimer;
