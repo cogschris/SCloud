@@ -227,80 +227,152 @@ function getArtistImageFromID(artist_id) {
  *  Functions for getting words from artist
  */
 
-function getWords(artist) {
-  $.ajax({
-    url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(artist) + "&limit=10",
-    dataType: "json",
-    success: function( response ) {
-      console.log( response ); // server response
-      getSongListFromID(response.data[0].id, artist);
-    }
-  });
-}
+ function getWords(artists) {
+   var ret = {words: ""};
+   console.log(artists);
+   getArtistID(artists, 0, ret);
+ }
 
-function getSongListFromID(artist_id, artist) {
-  $.ajax({
-    url: "http://api.musicgraph.com/api/v2/artist/" + artist_id + "/tracks?api_key=88712a31d1b453ddc573d33c455a9888&limit=10",
-    dataType: "json",
-    success: function( response ) {
-      console.log( response );
-      var ret = {words: ""};
-      getLyrics(response.data, artist, 0, ret);
-    }
-  });
-}
+ function getArtistID(artists, index, ret) {
+   $.ajax({
+     url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(artists[index]) + "&limit=10",
+     dataType: "json",
+     success: function( response ) {
+       console.log( response ); // server response
+       console.log(artists);
+       getSongListFromID(response.data[0].id, artists, index, ret);
+     }
+   });
+ }
 
-function getLyrics(tracks, artist, index, ret) {
-  $.ajax({
-    url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(tracks[index].title) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=6438fd8c1646f56abfc9297c05b1e582",
-    dataType: "jsonp",
-    success: function( response ) {
-      console.log( response ); // server response
-      if (response.message.body.length != 0) {
-        var str = response.message.body.lyrics.lyrics_body
-        str = str.substring(0, str.indexOf("*"));
-        ret.words = ret.words + str + " ";
-      }
-      index++;
-      if (index == tracks.length) {
-        items = lyricsToWords(ret.words);
-        console.log(items);
-        myFunction(items);
-      } else {
-        getLyrics(tracks, artist, index, ret);
-      }
-    }
-  });
-}
+ function getSongListFromID(artist_id, artists, index, ret) {
+   $.ajax({
+     url: "http://api.musicgraph.com/api/v2/artist/" + artist_id + "/tracks?api_key=88712a31d1b453ddc573d33c455a9888&limit=10",
+     dataType: "json",
+     success: function( response ) {
+       console.log( response );
+       getLyrics(response.data, artists, index, 0, ret);
+     }
+   });
+ }
 
-function lyricsToWords(lyrics) {
-  lyrics = lyrics.toLowerCase();
-  var arr = lyrics.split(/[().,;!?\[\]\n\s]/g);
-  var dict = {};
-  for (i = 0; i < arr.length; i++) {
-    var stop = false;
-    for (j = 0; j < stop_words.length; j++) {
-      if (arr[i] === stop_words[j]) {
-        stop = true;
-        break;
-      }
-    }
-    if (!stop) {
-      if (!(arr[i] in dict)) {
-        dict[arr[i]] = 1;
-      } else {
-        dict[arr[i]]++;
-      }
-    }
-  }
-  var items = Object.keys(dict).map(function(key) {
-    return [key, dict[key]];
-  });
-  items.sort(function(first, second) {
-    return second[1] - first[1];
-  });
-  return items.slice(0, 250);
-}
+ function getLyrics(tracks, artists, artist_index, song_index, ret) {
+   $.ajax({
+     url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(tracks[song_index].title) + "&q_artist=" + encodeURIComponent(artists[artist_index]) + "&apikey=6438fd8c1646f56abfc9297c05b1e582",
+     dataType: "jsonp",
+     success: function( response ) {
+       console.log( response ); // server response
+       if (response.message.body.length != 0) {
+         var str = response.message.body.lyrics.lyrics_body
+         str = str.substring(0, str.indexOf("*"));
+         ret.words = ret.words + str + " ";
+       }
+       song_index++;
+       if (song_index == tracks.length) {
+         artist_index++;
+         if (artist_index < artists.length) {
+           getArtistID(artists, artist_index, ret);
+         } else {
+           var items = lyricsToWords(ret.words);
+           console.log(items);
+           myFunction(items);
+         }
+       } else {
+         getLyrics(tracks, artists, artist_index, song_index, ret);
+       }
+     }
+   });
+ }
+
+ function lyricsToWords(lyrics) {
+   lyrics = lyrics.toLowerCase();
+   var arr = lyrics.split(/[().,;!?\[\]\n\s]/g);
+   var dict = {};
+   for (i = 0; i < arr.length; i++) {
+     var stop = false;
+     for (j = 0; j < stop_words.length; j++) {
+       if (arr[i] === stop_words[j]) {
+         stop = true;
+         break;
+       }
+     }
+     if (!stop) {
+       if (!(arr[i] in dict)) {
+         dict[arr[i]] = 1;
+       } else {
+         dict[arr[i]]++;
+       }
+     }
+   }
+   var items = Object.keys(dict).map(function(key) {
+     return [key, dict[key]];
+   });
+   items.sort(function(first, second) {
+     return second[1] - first[1];
+   });
+   return items.slice(0, 250);
+ }
+
+ /**
+  *  Functions for getting lyrics in array:
+  */
+
+ function getLyricsInArray(artist, song_number) {
+   $.ajax({
+     url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(artist) + "&limit=10",
+     dataType: "json",
+     success: function( response ) {
+       console.log( response ); // server response
+       getSongListFromID2(response.data[0].id, artist, song_number);
+     }
+   });
+ }
+
+ function getSongListFromID2(artist_id, artist, song_number) {
+   $.ajax({
+     url: "http://api.musicgraph.com/api/v2/artist/" + artist_id + "/tracks?api_key=88712a31d1b453ddc573d33c455a9888&limit=10",
+     dataType: "json",
+     success: function( response ) {
+       console.log( response );
+       getLyrics2(response.data, artist, song_number);
+     }
+   });
+ }
+
+ function getLyrics2(tracks, artist, song_number) {
+   $.ajax({
+     url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(tracks[song_number].title) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=6438fd8c1646f56abfc9297c05b1e582",
+     dataType: "jsonp",
+     success: function( response ) {
+       console.log( response ); // server response
+       if (response.message.body.length != 0) {
+         var str = response.message.body.lyrics.lyrics_body
+         str = str.substring(0, str.indexOf("*"));
+         console.log(lyricsToArray(str, tracks[song_number].title));
+       }
+     }
+   });
+ }
+
+ function lyricsToArray(lyrics, song) {
+   lyrics = lyrics.toLowerCase();
+   var arr = lyrics.split(/[().,;!?\[\]\n\s]/g);
+   var dict = [];
+   dict.push(song);
+   for (i = 0; i < arr.length; i++) {
+     var stop = false;
+     for (j = 0; j < stop_words.length; j++) {
+       if (arr[i] === stop_words[j]) {
+         stop = true;
+         break;
+       }
+     }
+     if (!stop) {
+       dict.push(arr[i]);
+     }
+   }
+   return dict;
+ }
 
 /**
  *  Functions for setting the lyrics of the lyrics page:
