@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 	<head>
-		<title>Lyrics Page</title>
+		<title id="title">Lyrics Page</title>
 
 		<script src="http://www.google.com/jsapi" type="text/javascript"></script>
 		<script type="text/javascript">google.load("jquery", "1.3.2");</script>
@@ -24,25 +24,7 @@
 				<div class = "col-xs-4 col-xs-offset-4">
 					<h1 id="title_lyrics_page"></h1>
 					<script>
-						$(document).ready(function() {
-							// getSearchSuggestions("Drake");
-							// getArtistImage("Drake");
-							// getSongList("Drake");
-
-							$.ajax({
-								url: "CurrentArtistAndSong.php",
-								dataType: "text",
-								success: function( response ) {	
-									var songAndArtist = response.split("1996!&#@($@&)#^&*:-");
-									var title = document.getElementById('title_lyrics_page');
-									title.innerHTML = songAndArtist[0] + " by " + songAndArtist[1];
-									// setLyrics("All of Me", "John Legend");
-									setLyrics(songAndArtist[0], songAndArtist[1]);
-						      	}
-						      });
-
-
-						});
+						
 					</script>
 				</div>
 			</div>
@@ -59,34 +41,48 @@
 						Back To Word Cloud
 					</button>
 				</div>
-					<script type="text/javascript">
-
-						function downloadURI(uri, name) {
-					        var link = document.createElement("a");
-					        link.download = name;
-					        link.href = uri;
-					        document.body.appendChild(link);
-					        link.click(); 
-    					}
-						$("#back_to_WC_btn").click(function(){
-							window.href = "wordcloud.php";
-						});
-
-					</script>
 					<button class="btn btn-lg" id="back_to_songlist_btn">
 						Back To Song List
-					<script type="text/javascript">
-						$("#back_to_songlist_btn").click(function(){
-							window.href = "songListPage.php";	
-						});
-					</script>
 					</button>
 
 			</div>
 		</div>
 
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$.ajax({
+					url: "CurrentArtistAndSong.php",
+					dataType: "text",
+					success: function( response ) {	
+						var songAndArtist = response.split("1996!&#@($@&)#^&*:-");
+						var title = document.getElementById('title_lyrics_page');
+						title.innerHTML = songAndArtist[0] + " by " + songAndArtist[1];
+						setLyrics(songAndArtist[0], songAndArtist[1]);
+						var title = document.getElementById("title");
+						var pageTitle = document.getElementById("title_lyrics_page");
+						title.innerHTML = songAndArtist[0];
+						title.innerHTML = songAndArtist[0];
+			      	}
+			     });
 
+				$("#back_to_WC_btn").click(function(){
+					console.log("wc button");
+					window.location.href = "wordcloud.php";
+				});
+
+				$("#back_to_songlist_btn").click(function(){
+					console.log("songlist btn");
+					window.location.href = "songListPage.php";	
+				});
+			});
+			
+
+		</script>
 
 	</body>
 
 </html>
+
+
+
+
