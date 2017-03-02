@@ -355,6 +355,7 @@ function getArtistImage(artist) {
           if (artist_index < artists.length) {
             return getArtistID3(artists, artist_index, ret, word);
           } else {
+<<<<<<< HEAD
             ret.songs.sort(function(first, second){
               return second[1] - first[1];
             });
