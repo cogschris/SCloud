@@ -20,7 +20,7 @@ if(!isset($_SESSION['currentSong'])) {
 	$_SESSION['currentSong'] = 'Baby';
 }
 
-$json = json_encode($_SESSION['artists']);
+$json = json_encode($_SESSION['words']);
 echo ($json);
 
 ?>
