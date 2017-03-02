@@ -468,14 +468,12 @@ function myFunction(arr) {
         //add(span.id);
           var ta = document.createTextNode(this.innerHTML);///////////////////////////THis is where you get the word!!!!
         }
-        document.getElementById("something").appendChild(ta);
+        document.getElementById("something").appendChild(span);
 
 
 
-    };
-        document.getElementById("something").appendChild(span);//adding span to element
     }
-}
+  }
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
