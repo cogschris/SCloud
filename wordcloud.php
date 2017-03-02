@@ -8,6 +8,9 @@ if(!isset($_SESSION['words'])) {
 if(!isset($_SESSION['topWords'])) { 
   	$_SESSION['topWords'] = [];
 }
+if(!isset($_SESSION['currentWord'])) { 
+  	$_SESSION['currentWord'];
+}
 if(!isset($_SESSION['artists'])) { 
   	$_SESSION['artists'] = [];
 }

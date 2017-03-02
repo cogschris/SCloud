@@ -355,7 +355,7 @@ function getArtistImage(artist) {
           if (artist_index < artists.length) {
             return getArtistID3(artists, artist_index, ret, word);
           } else {
-            console.log(ret.songs);
+            //console.log(ret.songs);
             return ret.songs;
           }
         } else {
@@ -544,11 +544,22 @@ function myFunction(arr) {
         span.style.color = getRandomColor(); //changing color
         span.appendChild(t); //adding text to span
         span.onclick = function() {
-        //add(span.id);
-          var ta = document.createTextNode(this.innerHTML);///////////////////////////THis is where you get the word!!!!
+          var word = this.innerHTML;
+
+          var request = $.ajax({
+            url: "SetWord.php",
+            type: "POST",
+            data: {word : word},
+            dataType: "text"
+          });
+
+          request.done(function(msg) {
+            console.log(msg);
+            window.location.href = "songListPage.php";
+          });
         }
 
-        console.log(document.getElementById("something"));
+        //console.log(document.getElementById("something"));
         document.getElementById("something").appendChild(span);//adding span to element
     }
 }
