@@ -70,12 +70,10 @@ function getArtists() {
 
 		<div class="container-full">
 			<div class="row">
-				<h2> <center></center></h2>
+				<h2 id="wordCloudHeader"> <?php echo (getArtists()) ?></h2>
 			</div>
-			<br>
 			<center>
-	    		<br>
-	    		<br>
+	    		
 	    		<p id= "something"> </p>
 	    		<br>
 	    		<div class = "form-group">
@@ -132,9 +130,9 @@ function getArtists() {
 
 	        /* When the user clicks on the button,
 	        toggle between hiding and showing the dropdown content */
-	        // function myFunction() {
-	        // 	document.getElementById("myDropdown").classList.toggle("show");
-	        // }
+	        function myFunction() {
+	        	document.getElementById("myDropdown").classList.toggle("show");
+	        }
 
 	        function filterFunction() {
 	        	var input, filter, ul, li, a, i;
@@ -152,41 +150,7 @@ function getArtists() {
 	        }
 
 
-	        var delayTimer;
-			// doSearch takes in the user's input and displays the drop-down suggestions
-			function doSearch(suggestions){
-
-				document.getElementById('artistlist').innerHTML = "";
-				var list = document.getElementById('artistlist'); 
-				for (var i = 0; i < suggestions.length; i++){
-					// appendHTML += '<option value="' + suggestions[i] + '"/>';
-					var option = document.createElement('option');
-					option.value = suggestions[i];
-					list.appendChild(option);
-				}
-			}
-
-			function getSearchSuggestions(prefix) {
-				$.ajax({
-					url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(prefix) + "&limit=10",
-					dataType: "json",
-					success: function( response ) {
-			   			// console.log( response ); // server response
-			   			var suggestions = new Array();
-			   			for (var i = 0; i < 10; i++) {
-			        		// console.log("Suggestion: " + response.data[i].name);
-			        		suggestions.push(response.data[i].name);
-			        	}
-			        	// clearTimeout(delayTimer);
-			        	// setTimeout(function () {
-			        	// 	doSearch(suggestions);
-			        	// }, 2500);
-			      		//return suggestions;
-			      		doSearch(suggestions);
-
-			      	}
-			      });
-			}
+	        
 
 			function generateWordCloud() {
 
@@ -226,6 +190,7 @@ function getArtists() {
 
 				request.done(function(msg) {
 					document.title = msg;
+					document.getElementById('wordCloudHeader').innerHTML = msg;
 					console.log("Result: " + msg);
 				});
 
@@ -250,6 +215,42 @@ function getArtists() {
 				inputField.value = "";
 			})
 	    });
+
+	    var delayTimer;
+			// doSearch takes in the user's input and displays the drop-down suggestions
+		function doSearch(suggestions){
+
+			document.getElementById('artistlist').innerHTML = "";
+			var list = document.getElementById('artistlist'); 
+			for (var i = 0; i < suggestions.length; i++){
+				// appendHTML += '<option value="' + suggestions[i] + '"/>';
+				var option = document.createElement('option');
+				option.value = suggestions[i];
+				list.appendChild(option);
+			}
+		}
+
+		function getSearchSuggestions(prefix) {
+			$.ajax({
+				url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(prefix) + "&limit=10",
+				dataType: "json",
+				success: function( response ) {
+		   			// console.log( response ); // server response
+		   			var suggestions = new Array();
+		   			for (var i = 0; i < 10; i++) {
+		        		// console.log("Suggestion: " + response.data[i].name);
+		        		suggestions.push(response.data[i].name);
+		        	}
+		        	// clearTimeout(delayTimer);
+		        	// setTimeout(function () {
+		        	// 	doSearch(suggestions);
+		        	// }, 2500);
+		      		//return suggestions;
+		      		doSearch(suggestions);
+
+		      	}
+		    });
+		}
 
 		    	
 

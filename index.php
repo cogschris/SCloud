@@ -78,7 +78,7 @@ if(!isset($_SESSION['currentSong'])) {
 		      		doSearch(suggestions);
 
 		      	}
-		      });
+		    });
 		}
 
 		$(".search-button").click(function () {

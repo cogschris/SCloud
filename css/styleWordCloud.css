@@ -44,6 +44,14 @@ button {
     font-family: 'Montserrat', sans-serif;
 }
 
+#wordCloudHeader {
+    text-align:center;
+    font-size: 100px;
+    text-decoration: underline;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
 
 .search {
     position: relative;
