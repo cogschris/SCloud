@@ -34,18 +34,10 @@
 								dataType: "text",
 								success: function( response ) {	
 									var songAndArtist = response.split("1996!&#@($@&)#^&*:-");
-									console.log(songAndArtist);
 									var title = document.getElementById('title_lyrics_page');
 									title.innerHTML = songAndArtist[0] + " by " + songAndArtist[1];
-									setLyrics("All of Me", "John Legend");
-									//setLyrics(songAndArtist[0], songAndArtist[1]);
-									// var div = document.getElementById('lyricsDiv');
-									// html2canvas((div), {
-									// 	onrendered: function(canvas){
-									// 		var img = canvas.toDataURL();
-									// 		window.open(img);
-									// 	}
-									// });
+									// setLyrics("All of Me", "John Legend");
+									setLyrics(songAndArtist[0], songAndArtist[1]);
 						      	}
 						      });
 
@@ -77,15 +69,7 @@
 					        link.click(); 
     					}
 						$("#back_to_WC_btn").click(function(){
-							console.log("button is clicked");
-							var div = document.getElementById('lyricsDiv');
-							html2canvas((div), {
-								onrendered: function(canvas){
-									var img = canvas.toDataURL("image/png");
-									downloadURI("data:" + img, "yourImage.png");
-											
-								}
-							});
+							window.href = "wordcloud.php";
 						});
 
 					</script>
@@ -93,15 +77,7 @@
 						Back To Song List
 					<script type="text/javascript">
 						$("#back_to_songlist_btn").click(function(){
-							console.log("songlist btn");
-							$.ajax({
-								type: "POST",
-								url:"https://imagebin.ca/upload.php",
-								data: {img:"@../../Downloads/yourImage.png"},
-								success:function(response){
-									console.log("response: " + response);
-								}
-							});
+							window.href = "songListPage.php";	
 						});
 					</script>
 					</button>
