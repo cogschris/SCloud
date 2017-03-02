@@ -355,6 +355,23 @@ function getArtistImage(artist) {
           if (artist_index < artists.length) {
             return getArtistID3(artists, artist_index, ret, word);
           } else {
+            ret.songs.sort(function(first, second){
+              return second[1] - first[1];
+            });
+            document.getElementById('songListTableBody').innerHTML = '';
+            var output = '';
+            console.log("num songs: " + ret.songs.length);
+            var newArray = new Array();
+            for (var i = 0; i < ret.songs.length; i++){
+              var currSong = ret.songs[i];
+              if (newArray.indexOf(currSong[0]) == -1){
+                newArray.push(currSong[0]);
+                output += '<tr class="selectedSong"><td>' + currSong[0] + ' (' + currSong[1] + ') - ' + currSong[2] + '</td></tr>' ;
+              } 
+            }
+            console.log(output);
+
+            document.getElementById('songListTableBody').innerHTML = output;
             //console.log(ret.songs);
             return ret.songs;
           }
