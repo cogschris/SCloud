@@ -414,33 +414,45 @@ function myFunction(arr) {
         var span = document.createElement('span');//creating a span
 
         var calc = freq/big_freq;
-        if (calc <= 1 && calc > .875) {
+        if (calc == 1) {
+          span.style.fontSize = fontSizes[9];
+        }
+        else if (calc < 1 && calc >= .875) {
             span.style.fontSize = fontSizes[8];
         }
-        else if (calc <= .875 && calc > .75) {
+        else if (calc < .875 && calc >= .75) {
             span.style.fontSize = fontSizes[7];
         }
-        else if (calc <= .75 && calc > .625) {
+        else if (calc < .75 && calc >= .625) {
             span.style.fontSize = fontSizes[6];
         }
-        else if (calc <= .625 && calc > .50) {
+        else if (calc < .625 && calc >= .50) {
             span.style.fontSize = fontSizes[5];
         }
-        else if (calc <= .50 && calc > .375) {
+        else if (calc < .50 && calc >= .375) {
             span.style.fontSize = fontSizes[4];
         }
-        else if (calc <= .375 && calc > .25) {
+        else if (calc < .375 && calc >= .25) {
             span.style.fontSize = fontSizes[3];
         }
-        else if (calc <= .25 && calc > .125) {
+        else if (calc < .25 && calc >= .125) {
             span.style.fontSize = fontSizes[2];
         }
-        else if (calc <= .125 && calc > .0) {
+        else if (calc < .125 && calc >= .0) {
             span.style.fontSize = fontSizes[1];
         }
 
         span.style.color = getRandomColor(); //changing color
         span.appendChild(t); //adding text to span
+        span.onclick = function() {
+        //add(span.id);
+          var ta = document.createTextNode(this.innerHTML);///////////////////////////THis is where you get the word!!!! 
+        }
+        document.getElementById("something").appendChild(ta);
+        
+        
+        
+    };
         document.getElementById("something").appendChild(span);//adding span to element
     }
 }
