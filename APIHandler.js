@@ -355,7 +355,7 @@ function getArtistImage(artist) {
           if (artist_index < artists.length) {
             return getArtistID3(artists, artist_index, ret, word);
           } else {
-            //console.log(ret.songs);
+           
             return ret.songs;
           }
         } else {
