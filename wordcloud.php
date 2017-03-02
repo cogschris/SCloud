@@ -149,9 +149,6 @@ function getArtists() {
 	        	}
 	        }
 
-
-	        
-
 			function generateWordCloud() {
 
 				document.getElementById("something").innerHTML = "";
