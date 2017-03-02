@@ -91,7 +91,7 @@
 					</script>
 					<button class="btn btn-lg" id="back_to_songlist_btn">
 						Back To Song List
-					<script>
+					<script type="text/javascript">
 						$("#back_to_songlist_btn").click(function(){
 							console.log("songlist btn");
 							$.ajax({
