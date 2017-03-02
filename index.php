@@ -5,11 +5,14 @@ session_start();
 if(!isset($_SESSION['words'])) { 
   	$_SESSION['words'] = [];
 }
+if(!isset($_SESSION['topWords'])) { 
+  	$_SESSION['topWords'] = [];
+}
 if(!isset($_SESSION['artists'])) { 
   	$_SESSION['artists'] = [];
 }
-if(!isset($_SESSION['totalWords'])) { 
-	$_SESSION['totalWords'] = 0;
+if(!isset($_SESSION['totalWordsInCloud'])) { 
+	$_SESSION['totalWordsInCloud'] = 0;
 }
 if(!isset($_SESSION['currentSong'])) { 
 	$_SESSION['currentSong'] = "Baby"; 
@@ -22,6 +25,7 @@ if(!isset($_SESSION['currentSong'])) {
 	<meta charset="utf-8">
 	<title>SCloud Home</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="APIHandler.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 </head>
 <body>
@@ -76,6 +80,7 @@ if(!isset($_SESSION['currentSong'])) {
 
 				var inputField = document.getElementById("input-text");
 
+				// Add artist to array of artists on server
 				var request = $.ajax({
 					url: "AddArtist.php",
 					type: "POST",
@@ -87,6 +92,22 @@ if(!isset($_SESSION['currentSong'])) {
 					console.log("Result: " + msg);
 					window.location.href = "wordcloud.php";
 				});
+
+				// Get an array of all words in the lyrics to song(s)
+				// var words = getWords(inputField.value);
+
+				// // Add songs to array of words on server
+				// var request2 = $.ajax({
+				// 	url: "AddWords.php",
+				// 	type: "POST",
+				// 	data: {words : words},
+				// 	dataType: "text"
+				// });
+
+				// request2.done(function(msg) {
+				// 	console.log("Result: " + msg);
+				// 	//window.location.href = "wordcloud.php";
+				// });
 			})
 
 		</script>

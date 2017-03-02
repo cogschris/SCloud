@@ -4,6 +4,7 @@ class Word {
 
 	var $word;
 	var $count;
+	var $freq;
 	var $songs = array();
 
 	function __construct($raw_word) {
@@ -19,6 +20,10 @@ class Word {
 		$this->count += 1;
 	}
 
+	function getCount() {
+		return $this->count;
+	}
+
 	function addSong($song) {
 		array_push($this->songs, $song);
 	}
@@ -26,6 +31,15 @@ class Word {
 	function getSongs() {
 		return $this->songs;
 	}
+
+	function calcFreq($totalWords) {
+		$this->freq = (double) $this->count/$totalWords;
+	}
+
+	function getFreq() {
+		return $this->freq;
+	}
+
 }
 
 ?>
