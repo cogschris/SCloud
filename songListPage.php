@@ -1,8 +1,41 @@
+<?php
+
+session_start();
+
+if(!isset($_SESSION['words'])) { 
+    $_SESSION['words'] = [];
+}
+if(!isset($_SESSION['topWords'])) { 
+    $_SESSION['topWords'] = [];
+}
+if(!isset($_SESSION['currentWord'])) { 
+    $_SESSION['currentWord'];
+}
+if(!isset($_SESSION['artists'])) { 
+    $_SESSION['artists'] = [];
+}
+if(!isset($_SESSION['totalWordsInCloud'])) { 
+  $_SESSION['totalWordsInCloud'] = 0;
+}
+if(!isset($_SESSION['currentSong'])) { 
+  $_SESSION['currentSong'] = "Baby"; 
+}
+
+function getWord() {
+  if (!is_null($_SESSION['currentWord'])) {
+    return $_SESSION['currentWord'];
+  } else {
+    return 'false';
+  }
+
+}
+
+?>
 <!doctype html>
 <html> 
  
  <head>
-    <title> Song List Title Page </title>
+    <title><?php echo (getWord()) ?></title>
     <link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="css/songListPageCSS.css"/>
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -14,7 +47,7 @@
     <div class="container-full">
       <div class ="row">
         <div class = "col-xs-12">
-      <h1 id="songListHeader"></h1>
+      <h1 id="songListHeader"><?php echo (getWord()) ?></h1>
         </div>
       </div>
 
@@ -24,12 +57,12 @@
        
           <thead>
             <tr>
-              <th> Song (frequency of word) </th>
+              <th> Song (Word Frequency) </th>
             </tr>
           </thead>
 
-          <tbody>
-            <tr>
+          <tbody id="songListTableBody">
+            <!-- <tr>
               <td> song 1 (14) </td>
             </tr>
             <tr>
@@ -37,7 +70,7 @@
             </tr>
             <tr>
               <td>song 3 (9) </td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>
@@ -76,6 +109,10 @@
           });
         }
 
+      })
+
+      $('#backToWCButton').click(function() {
+        window.location.href = "wordcloud.php";
       })
     </script>
   </body>
