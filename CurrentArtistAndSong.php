@@ -17,7 +17,7 @@
 		$_SESSION['currentSong'] = "Baby"; 
 	}
 	if(!isset($_SESSION['currentArtist'])){
-		$_SESSION['currentArtist'] = "Artist for Da Baby";
+		$_SESSION['currentArtist'] = "Justin Bieber";
 	}
 
 	$results = Array($_SESSION['currentSong'], $_SESSION['currentArtist']);

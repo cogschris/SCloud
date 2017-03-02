@@ -8,6 +8,9 @@ if(!isset($_SESSION['words'])) {
 if(!isset($_SESSION['topWords'])) { 
   	$_SESSION['topWords'] = [];
 }
+if(!isset($_SESSION['currentWord'])) { 
+  	$_SESSION['currentWord'];
+}
 if(!isset($_SESSION['artists'])) { 
   	$_SESSION['artists'] = [];
 }
@@ -40,6 +43,8 @@ function getArtists() {
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script src="APIHandler.js"></script>
+		<script src="html2canvas.js"></script>
+		<script src="FileSaver.js"></script>
 
 		
 
@@ -60,13 +65,16 @@ function getArtists() {
 	<body>
 
 		<div id="fb-root"></div>
-		<script>(function(d, s, id) {
-  	var js, fjs = d.getElementsByTagName(s)[0];
- 	 if (d.getElementById(id)) return;
- 		 js = d.createElement(s); js.id = id;
-  		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
- 	 	fjs.parentNode.insertBefore(js, fjs);
-	}	(document, 'script', 'facebook-jssdk'));</script>
+		<script>(
+			function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) return;
+				js = d.createElement(s); js.id = id;
+				js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+				fjs.parentNode.insertBefore(js, fjs);
+			}
+			(document, 'script', 'facebook-jssdk'));
+		</script>
 
 		<div class="container-full">
 			<div class="row">
@@ -95,18 +103,25 @@ function getArtists() {
 	           <!--  <button class="btn btn-lg btn-primary" href="http://dotstrap.com/"><i class="glyphicon glyphicon-user pull-left"></i><span>Share to Facebook</span></button>  -->
 
 
-
-
-							<div class="fb-share-button" 
-							data-href="https://ibin.co/3E8xnkDQhCZR.jpg " 
-							data-layout="button" 
-							data-size="large" 
-							click = 
-							data-mobile-iframe="true">
-							<a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+	           	<!-- This creates a button that will share what is at data-href to facebook, unfortunatley we can not get the clicked event when it is a div, only as a button can we get the event when this is a button but then the fb dialog doesn't appear. -->
+				<div class="fb-share-button" id="fb_button"
+					data-href="https://ibin.co/3EAfvQZC7rLE.png" 
+					data-layout="button" data-size="large" 
+					data-mobile-iframe="true">
+						<a class="fb-xfbml-parse-ignore" 
+					target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>
+					
+					</div>
 
  
+				<!-- <script type="text/javascript">
 
+
+					$(document).ready(function(){
+						
+					});
+						
+				</script> -->
 
 	           <!--  Load Facebook SDK for JavaScript -->
 					  <!-- <div id="fb-root"></div>
@@ -134,6 +149,7 @@ function getArtists() {
 			
 			generateWordCloud();
 
+
 	        /* When the user clicks on the button,
 	        toggle between hiding and showing the dropdown content */
 	        function myFunction() {
@@ -154,9 +170,6 @@ function getArtists() {
 	        		}
 	        	}
 	        }
-
-
-	        
 
 			function generateWordCloud() {
 
@@ -181,6 +194,24 @@ function getArtists() {
 	      	// Generate a new webpage with single artist in input field?
 	      	$(".search-button").click(function () {
 
+	      		var inputField = document.getElementById("input-text");
+
+				var request = $.ajax({
+					url: "NewCloud.php",
+					type: "POST",
+					data: {artist : inputField.value},
+					dataType: "text"
+				});
+
+				request.done(function(msg) {
+					document.title = msg;
+					document.getElementById('wordCloudHeader').innerHTML = msg;
+					console.log("Result: " + msg);
+				});
+
+				generateWordCloud();
+
+				inputField.value = "";
 	      	})
 
 	      	$(".add-button").click(function () {
@@ -202,24 +233,29 @@ function getArtists() {
 
 				generateWordCloud();
 
-				// Get an array of all words in the lyrics to song(s)
-				// var words = getWords(inputField.value);
-
-				// // Add songs to array of words on server
-				// var request2 = $.ajax({
-				// 	url: "AddWords.php",
-				// 	type: "POST",
-				// 	data: {words : words},
-				// 	dataType: "text"
-				// });
-
-				// request2.done(function(msg) {
-				// 	console.log("Result: " + msg);
-				// 	//window.location.href = "wordcloud.php";
-				// });
-
 				inputField.value = "";
 			})
+
+	      	function downloadURI(uri, name) {
+		        var link = document.createElement("a");
+		        link.download = name;
+		        link.href = uri;
+		        document.body.appendChild(link);
+		        link.click(); 
+    		}
+
+			$("#fb_button").click(function(){
+				console.log("button is clicked");
+				// window.open("https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse");
+				var div = document.getElementById('something');
+				html2canvas((div), {
+					onrendered: function(canvas){
+						console.log("on rendered called");
+						var img = canvas.toDataURL("image/png");
+						downloadURI("data:" + img, "yourImage.png");
+					}
+				});
+			});
 	    });
 
 	    var delayTimer;

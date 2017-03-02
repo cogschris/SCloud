@@ -307,7 +307,7 @@ function getArtistImage(artist) {
 
   function getSongsFromWord(artists, word) {
     var ret = {songs: []};
-    getArtistID3(artists, 0, ret, word);
+    return getArtistID3(artists, 0, ret, word);
   }
 
   function getArtistID3(artists, index, ret, word) {
@@ -316,7 +316,7 @@ function getArtistImage(artist) {
       dataType: "json",
       success: function( response ) {
         console.log( response ); // server response
-        getSongListFromID3(response.data[0].id, artists, index, ret, word);
+        return getSongListFromID3(response.data[0].id, artists, index, ret, word);
       }
     });
   }
@@ -327,7 +327,7 @@ function getArtistImage(artist) {
       dataType: "json",
       success: function( response ) {
         console.log( response );
-        getLyrics3(response.data, artists, index, 0, ret, word);
+        return getLyrics3(response.data, artists, index, 0, ret, word);
       }
     });
   }
@@ -344,19 +344,39 @@ function getArtistImage(artist) {
           str = str.substring(0, str.indexOf("*"));
           count = checkForWord(str, word);
           if (count > 0) {
-            ret.songs.push(tracks[song_index].title);
+            var song_title = tracks[song_index].title;
+            var arr = [song_title, count, artists[artist_index]];
+            ret.songs.push(arr);
           }
         }
         song_index++;
         if (song_index == tracks.length) {
           artist_index++;
           if (artist_index < artists.length) {
-            getArtistID3(artists, artist_index, ret, word);
+            return getArtistID3(artists, artist_index, ret, word);
           } else {
-            console.log(ret.songs);
+            ret.songs.sort(function(first, second){
+              return second[1] - first[1];
+            });
+            document.getElementById('songListTableBody').innerHTML = '';
+            var output = '';
+            console.log("num songs: " + ret.songs.length);
+            var newArray = new Array();
+            for (var i = 0; i < ret.songs.length; i++){
+              var currSong = ret.songs[i];
+              if (newArray.indexOf(currSong[0]) == -1){
+                newArray.push(currSong[0]);
+                output += '<tr class="selectedSong"><td  onclick="songSelected(this.innerHTML);">' + currSong[0] + ' (' + currSong[1] + ') - ' + currSong[2] + '</td></tr>' ;
+              } 
+            }
+            console.log(output);
+
+            document.getElementById('songListTableBody').innerHTML = output;
+            //console.log(ret.songs);
+            return ret.songs;
           }
         } else {
-          getLyrics3(tracks, artists, artist_index, song_index, ret, word);
+          return getLyrics3(tracks, artists, artist_index, song_index, ret, word);
         }
       }
     });
@@ -487,8 +507,9 @@ function getFrequency(track, artist, word) {
   });
 }
 
-
-
+/**
+ *  Functions for making the word cloud:
+ */
 
 function myFunction(arr) {
 
@@ -540,11 +561,22 @@ function myFunction(arr) {
         span.style.color = getRandomColor(); //changing color
         span.appendChild(t); //adding text to span
         span.onclick = function() {
-        //add(span.id);
-          var ta = document.createTextNode(this.innerHTML);///////////////////////////THis is where you get the word!!!!
+          var word = this.innerHTML;
+
+          var request = $.ajax({
+            url: "SetWord.php",
+            type: "POST",
+            data: {word : word},
+            dataType: "text"
+          });
+
+          request.done(function(msg) {
+            console.log(msg);
+            window.location.href = "songListPage.php";
+          });
         }
 
-        console.log(document.getElementById("something"));
+        //console.log(document.getElementById("something"));
         document.getElementById("something").appendChild(span);//adding span to element
     }
 }
@@ -557,6 +589,10 @@ function getRandomColor() {
     }
     return color;
 }
+
+/**
+ *  Function for shuffling word cloud array:
+ */
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;

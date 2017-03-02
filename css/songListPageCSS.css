@@ -9,7 +9,7 @@
 .container-full
 {
 	background-color: #d9d9d9;
-	height: 1000px;
+	height: 1500px;
 	font-family: 'Montserrat', sans-serif;
 }
 
@@ -20,10 +20,15 @@
 
 #songListHeader {
 	color: #c53fff;
+	text-align: center;
+	font-size: 100px;
+	margin-bottom: 20px;
 }
 
 #songListTable{
 	color: #c53fff;
+	font-size: 35px;
+	margin-bottom: 30px;
 }
 
 
