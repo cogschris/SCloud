@@ -13,9 +13,9 @@
 
   <body>
     <div class="container-full">
-      <div class ="row" id="songListHeader">
+      <div class ="row">
         <div class = "col-xs-12">
-      <h1> <center> Song List Title </center></h1>
+      <h1 id="songListHeader">Song</h1>
         </div>
       </div>
 

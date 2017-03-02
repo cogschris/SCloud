@@ -6,6 +6,8 @@
 	color: #c53fff;
 	text-align: center;
 	margin-top: 30px;
+	font-size: 100px;
+	margin-bottom: 30px;
 }
 
 body {
@@ -15,7 +17,7 @@ body {
 
 .container-full{
 	background-color: #d9d9d9;
-	height: 1000px;
+	height: 1200px;
 	font-family: 'Montserrat', sans-serif;
 }
 
@@ -28,9 +30,10 @@ body {
 
 #lyrics {
 	color: #c53fff;
+	margin-bottom: 30px;
 }
 
 #buttonRow {
-	margin-top: 30px;
+	
 	text-align:center;
 }
