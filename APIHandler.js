@@ -345,7 +345,7 @@ function getArtistImage(artist) {
           count = checkForWord(str, word);
           if (count > 0) {
             var song_title = tracks[song_index].title;
-            var arr = {song_title, count};
+            var arr = [song_title, count, artists[artist_index]];
             ret.songs.push(arr);
           }
         }
