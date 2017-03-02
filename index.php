@@ -66,7 +66,7 @@ if(!isset($_SESSION['currentSong'])) {
 		   			// console.log( response ); // server response
 		   			var suggestions = new Array();
 		   			for (var i = 0; i < 10; i++) {
-		        		console.log("Suggestion: " + response.data[i].name);
+		        		//console.log("Suggestion: " + response.data[i].name);
 		        		suggestions.push(response.data[i].name);
 		        	}
 		        	// clearTimeout(delayTimer);
@@ -74,7 +74,7 @@ if(!isset($_SESSION['currentSong'])) {
 		        	// 	doSearch(suggestions);
 		        	// }, 2500);
 		      		//return suggestions;
-		      		console.log(response);
+		      		//console.log(response);
 		      		doSearch(suggestions);
 
 		      	}
