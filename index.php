@@ -85,35 +85,50 @@ if(!isset($_SESSION['currentSong'])) {
 
 			var inputField = document.getElementById("input-text");
 
-				// Add artist to array of artists on server
-				var request = $.ajax({
-					url: "AddArtist.php",
-					type: "POST",
-					data: {artist : inputField.value},
-					dataType: "text"
-				});
+			// Check if the artist is in the array on server
+			var request0 = $.ajax({
+				url: "CheckArtists.php",
+				type: "GET",
+				data: {artist : inputField.value},
+				dataType: "text"
+			});
 
-				request.done(function(msg) {
-					console.log("Result: " + msg);
-					window.location.href = "wordcloud.php";
-				});
+			request0.done(function(msg) {
+				console.log("Result: " + msg);
+				if (msg == 'true') {
+					return;
+				}
+			});
 
-				// Get an array of all words in the lyrics to song(s)
-				// var words = getWords(inputField.value);
+			// Add artist to array of artists on server
+			var request = $.ajax({
+				url: "AddArtist.php",
+				type: "POST",
+				data: {artist : inputField.value},
+				dataType: "text"
+			});
 
-				// // Add songs to array of words on server
-				// var request2 = $.ajax({
-				// 	url: "AddWords.php",
-				// 	type: "POST",
-				// 	data: {words : words},
-				// 	dataType: "text"
-				// });
+			request.done(function(msg) {
+				console.log("Result: " + msg);
+				window.location.href = "wordcloud.php";
+			});
 
-				// request2.done(function(msg) {
-				// 	console.log("Result: " + msg);
-				// 	//window.location.href = "wordcloud.php";
-				// });
-			})
+			// Get an array of all words in the lyrics to song(s)
+			// var words = getWords(inputField.value);
+
+			// // Add songs to array of words on server
+			// var request2 = $.ajax({
+			// 	url: "AddWords.php",
+			// 	type: "POST",
+			// 	data: {words : words},
+			// 	dataType: "text"
+			// });
+
+			// request2.done(function(msg) {
+			// 	console.log("Result: " + msg);
+			// 	//window.location.href = "wordcloud.php";
+			// });
+		})
 
 	</script>
 </body>

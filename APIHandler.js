@@ -425,6 +425,9 @@ function myFunction(arr) {
 
     var big_freq = arr[0][1]; //the number of the biggest frequency goes here
 
+    arr = shuffle(arr);
+
+
     for(count = 0; count < arr.length; count++){//Change this to iterate through the loop
 
         var freq = arr[count][1]; //frequency of word you working on
@@ -468,14 +471,12 @@ function myFunction(arr) {
         //add(span.id);
           var ta = document.createTextNode(this.innerHTML);///////////////////////////THis is where you get the word!!!!
         }
-        document.getElementById("something").appendChild(ta);
-
-
-
-    };
+        
+        console.log(document.getElementById("something"));
         document.getElementById("something").appendChild(span);//adding span to element
     }
 }
+
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
@@ -484,3 +485,24 @@ function getRandomColor() {
     }
     return color;
 }
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+

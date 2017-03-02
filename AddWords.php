@@ -18,12 +18,16 @@ if(!isset($_SESSION['totalWordsInCloud'])) {
 if(!isset($_SESSION['currentSong'])) {
 	$_SESSION['currentSong'] = 'Baby';
 }
+if(!isset($_SESSION['currentArtist'])) {
+	$_SESSION['currentArtist'] = 'Justin Bieber';
+}
 
 // Extract raw array of words
 $raw_array = isset($_POST['words']) ? $_POST['words'] : '';
 
 // Get the current song
 $currentSong = $_SESSION['currentSong'];
+$currentArtist = $_SESSION['currentArtist'];
 
 foreach ($raw_array as &$raw_word) {
 
@@ -40,7 +44,7 @@ foreach ($raw_array as &$raw_word) {
 	else {
 		$wordObject = $_SESSION['words'][$raw_word];
 		if (!in_array($currentSong, $wordObject->songs)) {
-			$wordObject->addSong($currentSong);
+			$wordObject->addSong($currentSong, $currentArtist);
 		}
 		$wordObject->incrementCount();
 	}
@@ -50,24 +54,27 @@ foreach ($raw_array as &$raw_word) {
 }
 
 // Testing comparator function - works!
-// $wordObject1 = new Word('dog');
-// $wordObject1->incrementCount();
-// $wordObject1->incrementCount();
-// $_SESSION['words']['dog'] = $wordObject1;
-// $wordObject2 = new Word('cat');
-// $wordObject2->incrementCount();
-// $wordObject2->incrementCount();
-// $wordObject2->incrementCount();
-// $wordObject2->incrementCount();
-// $_SESSION['words']['cat'] = $wordObject2;
-// $wordObject3 = new Word('bird');
-// $wordObject3->incrementCount();
-// $wordObject3->incrementCount();
-// $wordObject3->incrementCount();
-// $wordObject3->incrementCount();
-// $wordObject3->incrementCount();
-// $wordObject3->incrementCount();
-// $_SESSION['words']['bird'] = $wordObject3;
+$wordObject1 = new Word('dog');
+$wordObject1->incrementCount();
+$wordObject1->incrementCount();
+$wordObject1->addSong($currentSong, $currentArtist);
+$_SESSION['words']['dog'] = $wordObject1;
+$wordObject2 = new Word('cat');
+$wordObject2->incrementCount();
+$wordObject2->incrementCount();
+$wordObject2->incrementCount();
+$wordObject2->incrementCount();
+$wordObject2->addSong($currentSong, $currentArtist);
+$_SESSION['words']['cat'] = $wordObject2;
+$wordObject3 = new Word('bird');
+$wordObject3->incrementCount();
+$wordObject3->incrementCount();
+$wordObject3->incrementCount();
+$wordObject3->incrementCount();
+$wordObject3->incrementCount();
+$wordObject3->incrementCount();
+$wordObject3->addSong($currentSong, $currentArtist);
+$_SESSION['words']['bird'] = $wordObject3;
 
 // Sort the words 
 usort($_SESSION['words'], function ($word_a, $word_b) {
@@ -91,7 +98,13 @@ foreach ($_SESSION['topWords'] as &$top_word) {
 	$top_word->calcFreq($_SESSION['totalWordsInCloud']);
 }
 
-$json = json_encode($_SESSION['topWords']);
+// Create a 2D Array of Word and Freq
+$top_words_2d = [];
+foreach ($_SESSION['topWords'] as &$top_word) {
+	$top_words_2d[] = array($top_word->getWord(), $top_word->getCount());
+}
+
+$json = json_encode($top_words_2d);
 echo ($json);
 
 ?>

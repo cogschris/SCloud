@@ -23,18 +23,11 @@ if(!isset($_SESSION['currentArtist'])) {
 }
 
 // Extract raw word
-$raw_artist = isset($_POST['artist']) ? $_POST['artist'] : '';
+$raw_artist = isset($_GET['artist']) ? $_GET['artist'] : '';
 
 if (!in_array($raw_artist, $_SESSION['artists'])) {
-	$_SESSION['artists'][] = $raw_artist;
+	echo 'false';
+} else {
+	echo 'true';
 }
-
-$artists;
-
-foreach ($_SESSION['artists'] as &$artist) {
-	$artists .= $artist . " ";
-}
-
-echo $artists;
-
 ?>

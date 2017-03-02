@@ -24,8 +24,8 @@ class Word {
 		return $this->count;
 	}
 
-	function addSong($song) {
-		array_push($this->songs, $song);
+	function addSong($song, $artist) {
+		$this->songs[] = array($song, $artist);
 	}
 
 	function getSongs() {

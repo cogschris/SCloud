@@ -39,6 +39,7 @@ function getArtists() {
 		<link href="css/styleWordCloud.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="APIHandler.js"></script>
 	</head>
 	<body>
 		<div class="container-full">
@@ -50,6 +51,7 @@ function getArtists() {
 	    		<h1>Word Cloud goes here</h1>
 	    		<br>
 	    		<br>
+	    		<p id= "something"> </p>
 	    		<br>
 	    		<div class = "form-group">
 	    			<!-- <form class="search" method="post" action="index.html" > -->
@@ -74,11 +76,15 @@ function getArtists() {
 	    </div>
 	    <script type="text/javascript">
 
+	    $(document).ready(function() {
+			
+			generateWordCloud();
+
 	        /* When the user clicks on the button,
 	        toggle between hiding and showing the dropdown content */
-	        function myFunction() {
-	        	document.getElementById("myDropdown").classList.toggle("show");
-	        }
+	        // function myFunction() {
+	        // 	document.getElementById("myDropdown").classList.toggle("show");
+	        // }
 
 	        function filterFunction() {
 	        	var input, filter, ul, li, a, i;
@@ -132,6 +138,26 @@ function getArtists() {
 			      });
 			}
 
+			function generateWordCloud() {
+
+				document.getElementById("something").innerHTML = "";
+
+	    		var arr;
+
+	    		var request = $.ajax({
+					url: "GetArtists.php",
+					type: "GET",
+					dataType: "text"
+				});
+
+				request.done(function(msg) {
+					arr = JSON.parse(msg);
+					getWords(arr);
+				});
+
+				
+			}
+
 	      	// Generate a new webpage with single artist in input field?
 	      	$(".search-button").click(function () {
 
@@ -153,6 +179,8 @@ function getArtists() {
 					console.log("Result: " + msg);
 				});
 
+				generateWordCloud();
+
 				// Get an array of all words in the lyrics to song(s)
 				// var words = getWords(inputField.value);
 
@@ -171,6 +199,9 @@ function getArtists() {
 
 				inputField.value = "";
 			})
+	    });
+
+		    	
 
 		</script>
 	</body>
