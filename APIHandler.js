@@ -196,7 +196,7 @@ function getSearchSuggestions(prefix) {
 }
 
 /**
- *  Functions for getting the image of an artist
+ *  Function for getting the image of an artist
  */
 
 function getArtistImage(artist) {
@@ -206,25 +206,13 @@ function getArtistImage(artist) {
     crossDomain: false,
     success: function( response ) {
       console.log( response ); // server response
-      getArtistImageFromID(response.artists.items[0].id);
-    }
-  });
-}
-
-function getArtistImageFromID(artist_id) {
-  $.ajax({
-    url: "https://api.spotify.com/v1/artists/" + artist_id,
-    dataType: "json",
-    crossDomain: false,
-    success: function( response ) {
-      console.log( response ); // server response
-      console.log("Artist Image: " + response.images[0].url);
+      console.log(response.artists.items[0].images[0].url);
     }
   });
 }
 
 /**
- *  Functions for getting words from artist
+ *  Functions for getting the top 250 words from given artists
  */
 
  function getWords(artists) {
@@ -314,7 +302,7 @@ function getArtistImageFromID(artist_id) {
  }
 
  /**
-  *  Functions for getting lyrics in array:
+  *  Functions for getting lyrics of an artist in array:
   */
 
  function getLyricsInArray(artist, song_number) {
@@ -391,9 +379,41 @@ function setLyrics(track, artist) {
   });
 }
 
+/**
+ *  Functions for getting the frequency of a word in a song:
+ */
 
-
-
+function getFrequency(track, artist, word) {
+  $.ajax({
+    url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(track) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=6438fd8c1646f56abfc9297c05b1e582",
+    dataType: "jsonp",
+    success: function( response ) {
+      console.log( response ); // server response
+      var lyrics = response.message.body.lyrics.lyrics_body;
+      lyrics = lyrics.substring(0, lyrics.indexOf("*"));
+      lyrics = lyrics.toLowerCase();
+      var arr = lyrics.split(/[().,;!?\[\]\n\s]/g);
+      var dict = {};
+      for (i = 0; i < arr.length; i++) {
+        var stop = false;
+        for (j = 0; j < stop_words.length; j++) {
+          if (arr[i] === stop_words[j]) {
+            stop = true;
+            break;
+          }
+        }
+        if (!stop) {
+          if (!(arr[i] in dict)) {
+            dict[arr[i]] = 1;
+          } else {
+            dict[arr[i]]++;
+          }
+        }
+      }
+      return dict[word];
+    }
+  });
+}
 
 
 
@@ -446,16 +466,14 @@ function myFunction(arr) {
         span.appendChild(t); //adding text to span
         span.onclick = function() {
         //add(span.id);
-          var ta = document.createTextNode(this.innerHTML);///////////////////////////THis is where you get the word!!!! 
+          var ta = document.createTextNode(this.innerHTML);///////////////////////////THis is where you get the word!!!!
         }
-        document.getElementById("something").appendChild(ta);
-        
-        
-        
-    };
-        document.getElementById("something").appendChild(span);//adding span to element
+        document.getElementById("something").appendChild(span);
+
+
+
     }
-}
+  }
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';

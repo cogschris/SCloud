@@ -11,15 +11,6 @@
 		<link rel="stylesheet" href="./css/lyrics.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-		<script>
-			$(document).ready(function() {
-				// getSearchSuggestions("Drake");
-				// getArtistImage("Drake");
-				// getSongList("Drake");
-				setLyrics("Hotline Bling", "Drake");
-			});
-		</script>
-
 	</head>
 
 	<body>
@@ -28,7 +19,30 @@
 
 			<div class = "row">
 				<div class = "col-xs-4 col-xs-offset-4">
-					<h1 id="title_lyrics_page">Hotline Bling</h1>
+					<h1 id="title_lyrics_page"></h1>
+					<script>
+						$(document).ready(function() {
+							// getSearchSuggestions("Drake");
+							// getArtistImage("Drake");
+							// getSongList("Drake");
+
+							$.ajax({
+								url: "CurrentArtistAndSong.php",
+								dataType: "text",
+								success: function( response ) {	
+									var songAndArtist = response.split("1996!&#@($@&)#^&*:-");
+									console.log(songAndArtist);
+									var title = document.getElementById('title_lyrics_page');
+									console.log(title.text);
+									title.innerHTML = songAndArtist[0] + " by " + songAndArtist[1];
+									console.log(title.text);
+									setLyrics("Hotline Bling", "Drake");
+								// setLyrics(songAndArtist[0], songAndArtist[1]);
+						      	}
+						      });
+
+						});
+					</script>
 				</div>
 			</div>
 
