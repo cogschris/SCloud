@@ -11,7 +11,7 @@ if(!isset($_SESSION['topWords'])) {
   	$_SESSION['topWords'] = [];
 }
 if(!isset($_SESSION['currentWord'])) { 
-  	$_SESSION['currentWord'];
+  	$_SESSION['currentWord'] = "notSet";
 }
 if(!isset($_SESSION['artists'])) { 
   	$_SESSION['artists'] = [];

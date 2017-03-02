@@ -57,7 +57,7 @@
 						var songAndArtist = response.split("1996!&#@($@&)#^&*:-");
 						var title = document.getElementById('title_lyrics_page');
 						title.innerHTML = songAndArtist[0] + " by " + songAndArtist[1];
-						setLyrics(songAndArtist[0], songAndArtist[1]);
+						setLyrics(songAndArtist[0], songAndArtist[1], songAndArtist[2]);
 						var title = document.getElementById("title");
 						var pageTitle = document.getElementById("title_lyrics_page");
 						title.innerHTML = songAndArtist[0];

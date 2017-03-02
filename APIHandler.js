@@ -246,7 +246,7 @@ function getArtistImage(artist) {
 
  function getLyrics(tracks, artists, artist_index, song_index, ret) {
    $.ajax({
-     url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(tracks[song_index].title) + "&q_artist=" + encodeURIComponent(artists[artist_index]) + "&apikey=6438fd8c1646f56abfc9297c05b1e582",
+     url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(tracks[song_index].title) + "&q_artist=" + encodeURIComponent(artists[artist_index]) + "&apikey=3174b763187f551ccf94d9d927c8de8b",
      dataType: "jsonp",
      success: function( response ) {
        console.log( response ); // server response
@@ -334,7 +334,7 @@ function getArtistImage(artist) {
 
   function getLyrics3(tracks, artists, artist_index, song_index, ret, word) {
     $.ajax({
-      url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(tracks[song_index].title) + "&q_artist=" + encodeURIComponent(artists[artist_index]) + "&apikey=6438fd8c1646f56abfc9297c05b1e582",
+      url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(tracks[song_index].title) + "&q_artist=" + encodeURIComponent(artists[artist_index]) + "&apikey=3174b763187f551ccf94d9d927c8de8b",
       dataType: "jsonp",
       success: function( response ) {
         console.log( response ); // server response
@@ -421,7 +421,7 @@ function getArtistImage(artist) {
 
  function getLyrics2(tracks, artist, song_number) {
    $.ajax({
-     url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(tracks[song_number].title) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=6438fd8c1646f56abfc9297c05b1e582",
+     url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(tracks[song_number].title) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=3174b763187f551ccf94d9d927c8de8b",
      dataType: "jsonp",
      success: function( response ) {
        console.log( response ); // server response
@@ -458,15 +458,24 @@ function getArtistImage(artist) {
  *  Functions for setting the lyrics of the lyrics page:
  */
 
-function setLyrics(track, artist) {
+function setLyrics(track, artist, word) {
   $.ajax({
-    url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(track) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=6438fd8c1646f56abfc9297c05b1e582",
+    url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(track) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=3174b763187f551ccf94d9d927c8de8b",
     dataType: "jsonp",
     success: function( response ) {
       console.log( response ); // server response
       if (response.message.body.length != 0) {
         var str = response.message.body.lyrics.lyrics_body;
-        $("#lyrics").append(str.substring(0, str.indexOf("*")));
+        var lyrics = str.substring(0, str.indexOf("*"));
+
+        var newString = lyrics.split(word.trim()).join('<span class="highlight">' + word.trim() + '</span>');
+        // var replace = word;
+        // var re = new RegExp(replace, "gi");
+        // lyrics.replace(re, '<span class="highlight">' + word + '</span>');
+        console.log("word:" + word);
+        console.log(newString);
+        $("#lyrics").append(newString);
+
         //setLyricsFromID(response.message.body.track_list[0].track.track_id);
       }
     }
@@ -479,7 +488,7 @@ function setLyrics(track, artist) {
 
 function getFrequency(track, artist, word) {
   $.ajax({
-    url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(track) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=6438fd8c1646f56abfc9297c05b1e582",
+    url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(track) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=3174b763187f551ccf94d9d927c8de8b",
     dataType: "jsonp",
     success: function( response ) {
       console.log( response ); // server response

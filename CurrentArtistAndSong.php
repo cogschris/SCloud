@@ -19,7 +19,10 @@
 	if(!isset($_SESSION['currentArtist'])){
 		$_SESSION['currentArtist'] = "Justin Bieber";
 	}
+	if(!isset($_SESSION['currentWord'])){
+		$_SESSION['currentWord'] = "Oh";
+	}
 
-	$results = Array($_SESSION['currentSong'], $_SESSION['currentArtist']);
-	echo $results[0]."1996!&#@($@&)#^&*:-".$results[1];
+	$results = Array($_SESSION['currentSong'], $_SESSION['currentArtist'], $_SESSION['currentWord']);
+	echo $results[0]."1996!&#@($@&)#^&*:-".$results[1]."1996!&#@($@&)#^&*:-".$results[2];
 ?>
