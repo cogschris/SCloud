@@ -428,7 +428,7 @@ function myFunction(arr) {
     arr = shuffle(arr);
 
 
-    for(count = 0; count < arr.length; count++){//Change this to iterate through the loop
+    for(count = 0; count < arr.length; count++) {//Change this to iterate through the loop
 
         var freq = arr[count][1]; //frequency of word you working on
 
@@ -471,7 +471,7 @@ function myFunction(arr) {
         //add(span.id);
           var ta = document.createTextNode(this.innerHTML);///////////////////////////THis is where you get the word!!!!
         }
-        
+
         console.log(document.getElementById("something"));
         document.getElementById("something").appendChild(span);//adding span to element
     }

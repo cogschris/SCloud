@@ -48,7 +48,6 @@ function getArtists() {
 			</div>
 			<br>
 			<center>
-	    		<h1>Word Cloud goes here</h1>
 	    		<br>
 	    		<br>
 	    		<p id= "something"> </p>
