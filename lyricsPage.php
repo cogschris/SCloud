@@ -6,6 +6,9 @@
 		<script src="http://www.google.com/jsapi" type="text/javascript"></script>
 		<script type="text/javascript">google.load("jquery", "1.3.2");</script>
 		<script src="APIHandler.js"></script>
+		<script src="html2canvas.js"></script>
+		<script src="FileSaver.js"></script>
+
 
 		<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 		<link rel="stylesheet" href="./css/lyrics.css">
@@ -33,32 +36,75 @@
 									var songAndArtist = response.split("1996!&#@($@&)#^&*:-");
 									console.log(songAndArtist);
 									var title = document.getElementById('title_lyrics_page');
-									console.log(title.text);
 									title.innerHTML = songAndArtist[0] + " by " + songAndArtist[1];
-									console.log(title.text);
-									setLyrics("Hotline Bling", "Drake");
-								// setLyrics(songAndArtist[0], songAndArtist[1]);
+									setLyrics("All of Me", "John Legend");
+									//setLyrics(songAndArtist[0], songAndArtist[1]);
+									// var div = document.getElementById('lyricsDiv');
+									// html2canvas((div), {
+									// 	onrendered: function(canvas){
+									// 		var img = canvas.toDataURL();
+									// 		window.open(img);
+									// 	}
+									// });
 						      	}
 						      });
+
 
 						});
 					</script>
 				</div>
 			</div>
 
-			<div class = "row">
+			<div id="lyricsDiv" class = "row">
 				<div class = "col-xs-10 col-xs-offset-1">
-					<h2 id="lyrics">
-					 	Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello 
-					</h2>
+					<h2 id="lyrics"></h2>
 				</div>
 			</div>
 
 			<div class = "row" id="buttonRow">
-			
-					<button class="btn btn-lg" id="back_to_WC_btn">Back To Word Cloud</button>
-					
-					<button class="btn btn-lg" id="back_to_songlist_btn">Back To Song List</button>
+				<div class = "col-xs-4 col-xs-offset-3">
+					<button class="btn btn-lg" id="back_to_WC_btn">
+						Back To Word Cloud
+					</button>
+				</div>
+					<script type="text/javascript">
+
+						function downloadURI(uri, name) {
+					        var link = document.createElement("a");
+					        link.download = name;
+					        link.href = uri;
+					        document.body.appendChild(link);
+					        link.click(); 
+    					}
+						$("#back_to_WC_btn").click(function(){
+							console.log("button is clicked");
+							var div = document.getElementById('lyricsDiv');
+							html2canvas((div), {
+								onrendered: function(canvas){
+									var img = canvas.toDataURL("image/png");
+									downloadURI("data:" + img, "yourImage.png");
+											
+								}
+							});
+						});
+
+					</script>
+					<button class="btn btn-lg" id="back_to_songlist_btn">
+						Back To Song List
+					<script>
+						$("#back_to_songlist_btn").click(function(){
+							console.log("songlist btn");
+							$.ajax({
+								type: "POST",
+								url:"https://imagebin.ca/upload.php",
+								data: {img:"@../../Downloads/yourImage.png"},
+								success:function(response){
+									console.log("response: " + response);
+								}
+							});
+						});
+					</script>
+					</button>
 
 			</div>
 		</div>
