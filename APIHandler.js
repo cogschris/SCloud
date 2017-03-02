@@ -251,7 +251,7 @@ function getArtistImage(artist) {
      success: function( response ) {
        console.log( response ); // server response
        if (response.message.body.length != 0) {
-         var str = response.message.body.lyrics.lyrics_body
+         var str = response.message.body.lyrics.lyrics_body;
          str = str.substring(0, str.indexOf("*"));
          ret.words = ret.words + str + " ";
        }
@@ -302,6 +302,81 @@ function getArtistImage(artist) {
  }
 
  /**
+  *  Functions for getting songs from word
+  */
+
+  function getSongsFromWord(artists, word) {
+    var ret = {songs: []};
+    return getArtistID3(artists, 0, ret, word);
+  }
+
+  function getArtistID3(artists, index, ret, word) {
+    $.ajax({
+      url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(artists[index]) + "&limit=10",
+      dataType: "json",
+      success: function( response ) {
+        console.log( response ); // server response
+        return getSongListFromID3(response.data[0].id, artists, index, ret, word);
+      }
+    });
+  }
+
+  function getSongListFromID3(artist_id, artists, index, ret, word) {
+    $.ajax({
+      url: "http://api.musicgraph.com/api/v2/artist/" + artist_id + "/tracks?api_key=88712a31d1b453ddc573d33c455a9888&limit=10",
+      dataType: "json",
+      success: function( response ) {
+        console.log( response );
+        return getLyrics3(response.data, artists, index, 0, ret, word);
+      }
+    });
+  }
+
+  function getLyrics3(tracks, artists, artist_index, song_index, ret, word) {
+    $.ajax({
+      url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(tracks[song_index].title) + "&q_artist=" + encodeURIComponent(artists[artist_index]) + "&apikey=6438fd8c1646f56abfc9297c05b1e582",
+      dataType: "jsonp",
+      success: function( response ) {
+        console.log( response ); // server response
+        var count;
+        if (response.message.body.length != 0) {
+          var str = response.message.body.lyrics.lyrics_body;
+          str = str.substring(0, str.indexOf("*"));
+          count = checkForWord(str, word);
+          if (count > 0) {
+            var song_title = tracks[song_index].title;
+            var arr = [song_title, count, artists[artist_index]];
+            ret.songs.push(arr);
+          }
+        }
+        song_index++;
+        if (song_index == tracks.length) {
+          artist_index++;
+          if (artist_index < artists.length) {
+            return getArtistID3(artists, artist_index, ret, word);
+          } else {
+            console.log(ret.songs);
+            return ret.songs;
+          }
+        } else {
+          return getLyrics3(tracks, artists, artist_index, song_index, ret, word);
+        }
+      }
+    });
+  }
+
+  function checkForWord(lyrics, word) {
+    lyrics = lyrics.toLowerCase();
+    var arr = lyrics.split(/[().,;!?\[\]\n\s]/g);
+    var count = 0;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i] === word) {
+        count++;
+      }
+    }
+    return count;
+  }
+ /**
   *  Functions for getting lyrics of an artist in array:
   */
 
@@ -334,7 +409,7 @@ function getArtistImage(artist) {
      success: function( response ) {
        console.log( response ); // server response
        if (response.message.body.length != 0) {
-         var str = response.message.body.lyrics.lyrics_body
+         var str = response.message.body.lyrics.lyrics_body;
          str = str.substring(0, str.indexOf("*"));
          console.log(lyricsToArray(str, tracks[song_number].title));
        }
@@ -415,8 +490,9 @@ function getFrequency(track, artist, word) {
   });
 }
 
-
-
+/**
+ *  Functions for making the word cloud:
+ */
 
 function myFunction(arr) {
 
@@ -486,6 +562,10 @@ function getRandomColor() {
     return color;
 }
 
+/**
+ *  Function for shuffling word cloud array:
+ */
+
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -504,5 +584,3 @@ function shuffle(array) {
 
   return array;
 }
-
-
