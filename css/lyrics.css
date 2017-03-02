@@ -3,25 +3,34 @@
 }*/
 
 #title_lyrics_page{
-	color: #c578dc;
+	color: #c53fff;
 	text-align: center;
 	margin-top: 30px;
 }
 
-.btn{
-	margin-top: 15px;
-	background: #c578dc;/*#c53fff;*/
+body {
+	font-family: 'Montserrat', sans-serif;
 }
+
 
 .container-full{
-	background-color: #DCDCDC;/*#bababa;*/
-	height: 800px;
+	background-color: #d9d9d9;
+	height: 1000px;
+	font-family: 'Montserrat', sans-serif;
 }
 
-#back_to_home_btn{
-	color:black;
+
+#back_to_songlist_btn, #back_to_WC_btn {
+	color: white;
+	background-color: #c53fff;
+	margin: 10px;
 }
 
-#back_to_word_btn{
-	color:black;
+#lyrics {
+	color: #c53fff;
+}
+
+#buttonRow {
+	margin-top: 30px;
+	text-align:center;
 }
