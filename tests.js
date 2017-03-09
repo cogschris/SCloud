@@ -3,17 +3,22 @@ $(document).ready(function () {
     assert.ok( 1 == "1", "Passed!" );
   });
 
-  QUnit.test("testSearch", function( assert ) {
+  QUnit.test("test getSearchSuggestions()", function( assert ) {
     function testSearch(input, expected) {
       assert.expect( 1 );
       var done = assert.async();
-      var output = getSearchSuggestions(input);
+      var output;
+      function callback(returnVal) {
+        output = returnVal;
+      }
+      getSearchSuggestions(input, callback);
       setTimeout(function(){
         console.log(output);
-        assert.equal( output[0], expected);
+        assert.deepEqual( output, expected);
         done();
       }, 2000);
     }
-    testSearch("jus", "Justin Bieber");
+    testSearch("jus", ["Justin Bieber","Justin Timberlake","Justin Moore","Justin Quiles","Justice","Justine Skye","Justin Nozuka","Justice Crew","Justin Hurwitz"]);
+
   });
 });
