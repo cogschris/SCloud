@@ -147,6 +147,9 @@ function getArtists() {
 
 	    $(document).ready(function() {
 			
+	    	console.log("On WordCloud page.");
+	    	console.log("\n\n\n");
+
 			generateWordCloud();
 
 

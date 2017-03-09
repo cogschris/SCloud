@@ -59,6 +59,7 @@ if(!isset($_SESSION['currentSong'])) {
 				option.value = suggestions[i];
 				list.appendChild(option);
 			}
+			console.log("Test ID 1: Search Artist -> Finished updating suggestions drop down.");
 		}
 
 		function getSearchSuggestions(prefix) {
@@ -86,6 +87,8 @@ if(!isset($_SESSION['currentSong'])) {
 
 		$(".search-button").click(function () {
 
+			console.log("Search button pressed.");
+
 			var inputField = document.getElementById("input-text");
 
 			// Check if the artist is in the array on server
@@ -97,7 +100,7 @@ if(!isset($_SESSION['currentSong'])) {
 			});
 
 			request0.done(function(msg) {
-				console.log("Result: " + msg);
+				//console.log("Result: " + msg);
 				if (msg == 'true') {
 					return;
 				}
@@ -112,7 +115,7 @@ if(!isset($_SESSION['currentSong'])) {
 			});
 
 			request.done(function(msg) {
-				console.log("Result: " + msg);
+				//console.log("Result: " + msg);
 				window.location.href = "wordcloud.php";
 			});
 
