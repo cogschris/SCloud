@@ -1,10 +1,8 @@
 $(document).ready(function () {
-  QUnit.test( "hello test", function( assert ) {
-    assert.ok( 1 == "1", "Passed!" );
-  });
+  var timeout = 1000;
 
-  QUnit.test("test getSearchSuggestions()", function( assert ) {
-    function testSearch(input, expected) {
+  QUnit.test("Test getSearchSuggestions()", function( assert ) {
+    function runTest(input, expected) {
       assert.expect( 3 );
       var done = assert.async();
       var output;
@@ -16,15 +14,15 @@ $(document).ready(function () {
         console.log(output);
         assert.deepEqual( output, expected);
         done();
-      }, 2000);
+      }, timeout);
     }
-    testSearch("jus", ["Justin Bieber","Justin Timberlake","Justin Moore","Justin Quiles","Justice","Justine Skye","Justin Nozuka","Justice Crew","Justin Hurwitz"]);
-    testSearch("dra", ["Drake", "Dragonette", "Drake White", "Draco Rosa", "Drapht", "Drag-On", "Drake Bell", "Dragonfly", "Dragonland"]);
-    testSearch("sha", ["Shawn Mendes", "Shakira", "Shaggy", "Shania Twain", "Shaka Loveless", "Shawn Hook", "Sharon Van Etten", "Sharon Jones & the Dap-Kings", "Shakka"]);
+    runTest("jus", ["Justin Bieber","Justin Timberlake","Justin Moore","Justin Quiles","Justice","Justine Skye","Justin Nozuka","Justice Crew","Justin Hurwitz"]);
+    runTest("dra", ["Drake", "Dragonette", "Drake White", "Draco Rosa", "Drapht", "Drag-On", "Drake Bell", "Dragonfly", "Dragonland"]);
+    runTest("sha", ["Shawn Mendes", "Shakira", "Shaggy", "Shania Twain", "Shaka Loveless", "Shawn Hook", "Sharon Van Etten", "Sharon Jones & the Dap-Kings", "Shakka"]);
 
   });
 
-  QUnit.test("test getArtistID()", function( assert ){
+  QUnit.test("Test getArtistID()", function( assert ){
     function testGetArtistID(input, expected){
       assert.expect(5);
       var done = assert.async();
@@ -37,7 +35,7 @@ $(document).ready(function () {
         console.log(output);
         assert.equal(output, expected);
         done();
-      },2000);
+      },timeout);
     }
 
     testGetArtistID("Justin Bieber", "680687b6-94f6-c447-fe5b-4533fb937de6");
@@ -48,7 +46,7 @@ $(document).ready(function () {
 
   });
 
-  QUnit.test("test getSongListFromID()", function (assert){
+  QUnit.test("Test getSongListFromID()", function (assert){
     function testGetSongListFromID(input, expected){
       assert.expect(2);
       var done = assert.async();
@@ -61,7 +59,7 @@ $(document).ready(function () {
         console.log(output);
         assert.deepEqual(output, expected);
         done();
-      }, 2000);
+      }, timeout);
     }
 
     testGetSongListFromID("a7afde36-1ee9-4c0e-9b32-e546706d6a09", [
@@ -258,7 +256,7 @@ $(document).ready(function () {
       original_release_year: 2015,
       id: "323aafa8-1090-4732-991b-03d68f227967"
     }]);
-    
+
     testGetSongListFromID("680687b6-94f6-c447-fe5b-4533fb937de6",  [
       {
       track_artist_id: "680687b6-94f6-c447-fe5b-4533fb937de6",
@@ -675,7 +673,7 @@ $(document).ready(function () {
 
   });
 
-  QUnit.test("test getLyrics()", function (assert){
+  QUnit.test("Test getLyrics()", function (assert){
     function testGetLyrics(inputTrack, inputArtist, expected){
       assert.expect(2);
       var done = assert.async();
@@ -688,11 +686,118 @@ $(document).ready(function () {
         console.log(output);
         assert.equal(output, expected);
         done();
-      }, 2000);
+      }, timeout);
     }
 
     testGetLyrics("Love Yourself", "Justin Bieber", "For all the times that you rain on my parade\nAnd all the clubs you get in using my name\nYou think you broke my heart, oh girl for goodness sake\nYou think I'm crying on my own, well I ain't\n\nAnd I didn't wanna write a song\nCause I didn't want anyone thinking I still care\nI don't but, you still hit my phone up\nAnd baby I be movin' on\nAnd I think you should be somethin'\nI don't wanna hold back, maybe you should know that\n\nMy mama don't like you and she likes everyone\nAnd I never like to admit that I was wrong\nAnd I've been so caught up in my job, didn't see what's going on\nBut now I know, I'm better sleeping on my own\n\nCause if you like the way you look that much\nOh, baby, you should go and love yourself\n...\n\n");
     testGetLyrics("Over", "Drake", "I know way too many people here right now\nThat I didn't know last year, who the fuck are y'all?\nI swear it feels like the last few nights we've been everywhere and back\nBut I just can't remember it all\n\nWhat am I doing?\nWhat am I doing?\nOh yeah, that's right, I'm doin' me, I'm doin' me\nI'm living life right now, man, and this what I'mma do 'til it's over\n\n'Til it's over\nBut it's far from over\n\nAlright, bottles on me, long as someone drink it\n\nNever drop the ball, fuck it y'all thinkin'?\nMakin' sure the Young Money ship is never sinkin'\n'Bout to set it off in this bitch, Jada Pinkett\nI shouldn't have drove, tell me how I'm getting home?\n\nYou too fine to be layin' down in bed alone\nI could teach you how to speak my language, Rosetta Stone\nI swear this life is like the sweetest thing I've ever known\nGot the gold thriller, Mike Jackson on these niggas\n\nAll I need's a fucking red jacket with some zippers\nSuper-good smidoke, a package of the Swisher's\nI did it overnight, it couldn't happen any quicker\n...\n\n");
 
+  });
+
+  QUnit.test("Test lyricsToWords()", function( assert ) {
+    function runTest(input, expected) {
+      assert.expect( 5 );
+      var done = assert.async();
+      var output;
+      function callback(returnVal) {
+        output = returnVal;
+      }
+      lyricsToWords(input, callback);
+      setTimeout(function(){
+        console.log(output);
+        assert.deepEqual( output, expected);
+        done();
+      }, timeout);
+    }
+    runTest("These are song lyrics", [["song",1], ["lyrics",1]]);
+    runTest("Testing function one two three", [["testing",1], ["function",1], ["one",1], ["two",1], ["three",1]]);
+    runTest("Testing function three three three", [["three",3], ["testing",1], ["function",1]]);
+    runTest("Testing testing function three three three", [["three",3], ["testing",2], ["function",1]]);
+    runTest("Testing testing function function three three three", [["three",3], ["testing",2], ["function",2]]);
+  });
+
+  QUnit.test("Test checkForWord()", function( assert ) {
+    function runTest(input_lyrics, input_word, expected) {
+      assert.expect( 5 );
+      var done = assert.async();
+      var output;
+      function callback(returnVal) {
+        output = returnVal;
+      }
+      checkForWord(input_lyrics, input_word, callback);
+      setTimeout(function(){
+        console.log(output);
+        assert.equal( output, expected);
+        done();
+      }, timeout);
+    }
+    runTest("These are song lyrics", "song", 1);
+    runTest("These are song song lyrics", "song", 2);
+    runTest("These are are are are song lyrics are", "are", 5);
+    runTest("These are are these are are song lyrics are", "are", 5);
+    runTest("These are song lyrics", "these", 1);
+  });
+
+  QUnit.test("Test lyricsToArray()", function( assert ) {
+    function runTest(input_lyrics, input_song, expected) {
+      assert.expect( 5 );
+      var done = assert.async();
+      var output;
+      function callback(returnVal) {
+        output = returnVal;
+      }
+      lyricsToArray(input_lyrics, input_song, callback);
+      setTimeout(function(){
+        console.log(output);
+        assert.deepEqual( output, expected);
+        done();
+      }, timeout);
+    }
+    runTest("These are song lyrics", "My Song", ["My Song", "song", "lyrics"]);
+    runTest("eat my shorts", "My Song", ["My Song", "eat", "shorts"]);
+    runTest("song song song", "My Song", ["My Song", "song", "song", "song"]);
+    runTest("song my song", "My Song", ["My Song", "song", "song"]);
+    runTest("song song my", "My Song", ["My Song", "song", "song"]);
+  });
+
+  QUnit.test("Test setLyrics()", function( assert ) {
+    function runTest(input_track, input_artist, input_word, expected) {
+      assert.expect( 2 );
+      var done = assert.async();
+      var output;
+      function callback(returnVal) {
+        output = returnVal;
+      }
+      setLyrics(input_track, input_artist, input_word, callback);
+      setTimeout(function(){
+        console.log(output);
+        assert.equal( output, expected);
+        done();
+      }, timeout);
+    }
+    runTest("Baby", "Justin Bieber", "baby", "Ohh wooaah Ohh wooaah Ohh wooaah\nYou know you love me, I know you care\nJust shout whenever, And I'll be there\nYou are my love, You are my heart\nAnd we will never ever-ever be apart\n\nAre we an item. Girl quit playing\n\"We're just friends\"\nWhat are you sayin?\nsaid theres another and look right in my eyes\nMy first love broke my heart for the first time,\n\nAnd I was like\nBaby, <span class=\"highlight\">baby</span>, <span class=\"highlight\">baby</span> ooh\nLike <span class=\"highlight\">baby</span>, <span class=\"highlight\">baby</span>, <span class=\"highlight\">baby</span> noo\nLike <span class=\"highlight\">baby</span>, <span class=\"highlight\">baby</span>, <span class=\"highlight\">baby</span> ooh\nThought you'd always be mine, mine\n\nBaby, <span class=\"highlight\">baby</span>, <span class=\"highlight\">baby</span> oohh\nLike <span class=\"highlight\">baby</span>, <span class=\"highlight\">baby</span>, <span class=\"highlight\">baby</span> noo\nLike <span class=\"highlight\">baby</span>, <span class=\"highlight\">baby</span>, <span class=\"highlight\">baby</span> ohh\nThought you'd always be mine, mine\n\nFor you, i would have done what ever\nAnd I just cant believe we ain't together\nAnd I wanna play it cool, But I'm losing you\nI'll buy you anything, ill buy you any ring\nAnd I'm in pieces, Baby fix me\n...\n\n");
+    runTest("Hotline Bling", "Drake", "oh", "You used to call me on my\nYou used to, you used to\nYeah\n\nYou used to call me on my cell phone\nLate night when you need my love\nCall me on my cell phone\nLate night when you need my love\nAnd I know when that hotline bling\nThat can only mean one thing\nI know when that hotline bling\nThat can only mean one thing\n\nEver since I left the city, you\nGot a reputation for yourself now\nEverybody knows and I feel left out\nGirl you got me down, you got me stressed out\nCause ever since I left the city, you\nStarted wearing less and goin' out more\nGlasses of champagne out on the dance floor\nHangin' with some girls I've never seen before\n\nYou used to call me on my cell phone\nLate night when you need my love\n...\n\n");
+  });
+
+  QUnit.test("Test songSelected()", function( assert ) {
+    function runTest(input, expected) {
+      assert.expect( 5 );
+      var done = assert.async();
+      var output;
+      function callback(returnVal) {
+        output = returnVal;
+      }
+      songSelected(input, callback);
+      setTimeout(function(){
+        console.log(output);
+        assert.equal( output, expected);
+        done();
+      }, timeout);
+    }
+    runTest("Baby (42) - Justin Bieber", "Justin Bieber Baby");
+    runTest("Sorry (12) - Justin Bieber", "Justin Bieber Sorry");
+    runTest("Hotline Bling (7) - Drake", "Drake Hotline Bling");
+    runTest("Single Ladies (35) - Beyonce", "Beyonce Single Ladies");
+    runTest("Song (35) - Beyonce", "Beyonce Song");
   });
 });
