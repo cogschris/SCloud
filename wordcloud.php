@@ -146,6 +146,7 @@ function getArtists() {
 	    <script type="text/javascript">
 
 	    $(document).ready(function() {
+        	console.log("On wordcloud.php");
 			
 	    	console.log("On WordCloud page.");
 	    	console.log("\n\n\n");
@@ -209,7 +210,7 @@ function getArtists() {
 				request.done(function(msg) {
 					document.title = msg;
 					document.getElementById('wordCloudHeader').innerHTML = msg;
-					console.log("Result: " + msg);
+					// console.log("Result: " + msg);
 				});
 
 				generateWordCloud();
@@ -231,7 +232,7 @@ function getArtists() {
 				request.done(function(msg) {
 					document.title = msg;
 					document.getElementById('wordCloudHeader').innerHTML = msg;
-					console.log("Result: " + msg);
+					// console.log("Result: " + msg);
 				});
 
 				generateWordCloud();
@@ -248,12 +249,12 @@ function getArtists() {
     		}
 
 			$("#fb_button").click(function(){
-				console.log("button is clicked");
+				// console.log("button is clicked");
 				// window.open("https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse");
 				var div = document.getElementById('something');
 				html2canvas((div), {
 					onrendered: function(canvas){
-						console.log("on rendered called");
+						// console.log("on rendered called");
 						var img = canvas.toDataURL("image/png");
 						downloadURI("data:" + img, "yourImage.png");
 					}

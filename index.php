@@ -61,7 +61,7 @@ if(!isset($_SESSION['currentSong'])) {
 			}
 			console.log("Test ID 1: Search Artist -> Finished updating suggestions drop down.");
 		}
-
+		
 		function getSearchSuggestions(prefix) {
 			$.ajax({
 				url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(prefix) + "&limit=10",
@@ -100,7 +100,8 @@ if(!isset($_SESSION['currentSong'])) {
 			});
 
 			request0.done(function(msg) {
-				//console.log("Result: " + msg);
+
+				// console.log("Result: " + msg);
 				if (msg == 'true') {
 					return;
 				}
@@ -115,7 +116,8 @@ if(!isset($_SESSION['currentSong'])) {
 			});
 
 			request.done(function(msg) {
-				//console.log("Result: " + msg);
+
+				// console.log("Result: " + msg);
 				window.location.href = "wordcloud.php";
 			});
 

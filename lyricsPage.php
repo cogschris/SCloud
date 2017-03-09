@@ -50,6 +50,8 @@
 
 		<script type="text/javascript">
 			$(document).ready(function() {
+				console.log("On lyricsPage.php");
+
 				$.ajax({
 					url: "CurrentArtistAndSong.php",
 					dataType: "text",
@@ -66,12 +68,12 @@
 			     });
 
 				$("#back_to_WC_btn").click(function(){
-					console.log("wc button");
+					console.log("backToWCButton clicked from lyricsPage.php");
 					window.location.href = "wordcloud.php";
 				});
 
 				$("#back_to_songlist_btn").click(function(){
-					console.log("songlist btn");
+					console.log("backToSongListButton clicked from lyricsPage.php");
 					window.location.href = "songListPage.php";	
 				});
 			});
