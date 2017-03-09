@@ -97,7 +97,7 @@ if(!isset($_SESSION['currentSong'])) {
 			});
 
 			request0.done(function(msg) {
-				console.log("Result: " + msg);
+				// console.log("Result: " + msg);
 				if (msg == 'true') {
 					return;
 				}
@@ -112,7 +112,7 @@ if(!isset($_SESSION['currentSong'])) {
 			});
 
 			request.done(function(msg) {
-				console.log("Result: " + msg);
+				// console.log("Result: " + msg);
 				window.location.href = "wordcloud.php";
 			});
 

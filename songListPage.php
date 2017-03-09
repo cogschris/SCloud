@@ -81,6 +81,7 @@ function getWord() {
     </div>
     <script type="text/javascript">
       $(document).ready(function () {
+        console.log("On songListPage.php");
 
         generateList();
 
@@ -113,6 +114,7 @@ function getWord() {
 
 
       $('#backToWCButton').click(function() {
+        console.log("backToWCButton clicked from songListPage.php");
         window.location.href = "wordcloud.php";
       })
 
@@ -123,7 +125,7 @@ function getWord() {
         index = word.indexOf('-');
         var artist = word.substring(index + 1);
         artist = artist.trim()
-        console.log(artist + " " + song);
+        // console.log(artist + " " + song);
 
         var request = $.ajax({
           url: "SetCurrentSongAndArtist.php",
