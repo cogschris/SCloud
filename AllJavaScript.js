@@ -243,7 +243,7 @@ function getSearchSuggestions(prefix, callback) {
    });
  }
 
- function lyricsToWords(lyrics) {
+ function lyricsToWords(lyrics, callback) {
    lyrics = lyrics.toLowerCase();
    var arr = lyrics.split(/[().,;!?\[\]\n\s]/g);
    var dict = {};
@@ -269,91 +269,14 @@ function getSearchSuggestions(prefix, callback) {
    items.sort(function(first, second) {
      return second[1] - first[1];
    });
-   return items.slice(0, 250);
+   callback(items.slice(0, 250));
  }
 
  /**
   *  Functions for getting songs from word
   */
 
-  function getSongsFromWord(artists, word) {
-    var ret = {songs: []};
-    return getArtistID3(artists, 0, ret, word);
-  }
-
-  function getArtistID3(artists, index, ret, word) {
-    $.ajax({
-      url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(artists[index]) + "&limit=10",
-      dataType: "json",
-      success: function( response ) {
-        console.log( response ); // server response
-        return getSongListFromID3(response.data[0].id, artists, index, ret, word);
-      }
-    });
-  }
-
-  function getSongListFromID3(artist_id, artists, index, ret, word) {
-    $.ajax({
-      url: "http://api.musicgraph.com/api/v2/artist/" + artist_id + "/tracks?api_key=88712a31d1b453ddc573d33c455a9888&limit=10",
-      dataType: "json",
-      success: function( response ) {
-        console.log( response );
-        return getLyrics3(response.data, artists, index, 0, ret, word);
-      }
-    });
-  }
-
-  function getLyrics3(tracks, artists, artist_index, song_index, ret, word) {
-    $.ajax({
-      url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(tracks[song_index].title) + "&q_artist=" + encodeURIComponent(artists[artist_index]) + "&apikey=3174b763187f551ccf94d9d927c8de8b",
-      dataType: "jsonp",
-      success: function( response ) {
-        console.log( response ); // server response
-        var count;
-        if (response.message.body.length != 0) {
-          var str = response.message.body.lyrics.lyrics_body;
-          str = str.substring(0, str.indexOf("*"));
-          count = checkForWord(str, word);
-          if (count > 0) {
-            var song_title = tracks[song_index].title;
-            var arr = [song_title, count, artists[artist_index]];
-            ret.songs.push(arr);
-          }
-        }
-        song_index++;
-        if (song_index == tracks.length) {
-          artist_index++;
-          if (artist_index < artists.length) {
-            return getArtistID3(artists, artist_index, ret, word);
-          } else {
-            ret.songs.sort(function(first, second){
-              return second[1] - first[1];
-            });
-            document.getElementById('songListTableBody').innerHTML = '';
-            var output = '';
-            console.log("num songs: " + ret.songs.length);
-            var newArray = new Array();
-            for (var i = 0; i < ret.songs.length; i++){
-              var currSong = ret.songs[i];
-              if (newArray.indexOf(currSong[0]) == -1){
-                newArray.push(currSong[0]);
-                output += '<tr class="selectedSong"><td  onclick="songSelected(this.innerHTML);">' + currSong[0] + ' (' + currSong[1] + ') - ' + currSong[2] + '</td></tr>' ;
-              }
-            }
-            console.log(output);
-
-            document.getElementById('songListTableBody').innerHTML = output;
-            //console.log(ret.songs);
-            return ret.songs;
-          }
-        } else {
-          return getLyrics3(tracks, artists, artist_index, song_index, ret, word);
-        }
-      }
-    });
-  }
-
-  function checkForWord(lyrics, word) {
+  function checkForWord(lyrics, word, callback) {
     lyrics = lyrics.toLowerCase();
     var arr = lyrics.split(/[().,;!?\[\]\n\s]/g);
     var count = 0;
@@ -362,50 +285,13 @@ function getSearchSuggestions(prefix, callback) {
         count++;
       }
     }
-    return count;
+    callback(count);
   }
  /**
   *  Functions for getting lyrics of an artist in array:
   */
 
- function getLyricsInArray(artist, song_number) {
-   $.ajax({
-     url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(artist) + "&limit=10",
-     dataType: "json",
-     success: function( response ) {
-       console.log( response ); // server response
-       getSongListFromID2(response.data[0].id, artist, song_number);
-     }
-   });
- }
-
- function getSongListFromID2(artist_id, artist, song_number) {
-   $.ajax({
-     url: "http://api.musicgraph.com/api/v2/artist/" + artist_id + "/tracks?api_key=88712a31d1b453ddc573d33c455a9888&limit=10",
-     dataType: "json",
-     success: function( response ) {
-       console.log( response );
-       getLyrics2(response.data, artist, song_number);
-     }
-   });
- }
-
- function getLyrics2(tracks, artist, song_number) {
-   $.ajax({
-     url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(tracks[song_number].title) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=3174b763187f551ccf94d9d927c8de8b",
-     dataType: "jsonp",
-     success: function( response ) {
-       console.log( response ); // server response
-       if (response.message.body.length != 0) {
-         var str = response.message.body.lyrics.lyrics_body;
-         str = str.substring(0, str.indexOf("*"));
-         console.log(lyricsToArray(str, tracks[song_number].title));
-       }
-     }
-   });
- }
-
- function lyricsToArray(lyrics, song) {
+ function lyricsToArray(lyrics, song, callback) {
    lyrics = lyrics.toLowerCase();
    var arr = lyrics.split(/[().,;!?\[\]\n\s]/g);
    var dict = [];
@@ -422,14 +308,14 @@ function getSearchSuggestions(prefix, callback) {
        dict.push(arr[i]);
      }
    }
-   return dict;
+   callback(dict);
  }
 
 /**
  *  Functions for setting the lyrics of the lyrics page:
  */
 
-function setLyrics(track, artist, word) {
+function setLyrics(track, artist, word, callback) {
   $.ajax({
     url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(track) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=3174b763187f551ccf94d9d927c8de8b",
     dataType: "jsonp",
@@ -445,46 +331,10 @@ function setLyrics(track, artist, word) {
         // lyrics.replace(re, '<span class="highlight">' + word + '</span>');
         console.log("word:" + word);
         console.log(newString);
-        $("#lyrics").append(newString);
-
+        //$("#lyrics").append(newString);
+        callback(newString);
         //setLyricsFromID(response.message.body.track_list[0].track.track_id);
       }
-    }
-  });
-}
-
-/**
- *  Functions for getting the frequency of a word in a song:
- */
-
-function getFrequency(track, artist, word) {
-  $.ajax({
-    url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(track) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=3174b763187f551ccf94d9d927c8de8b",
-    dataType: "jsonp",
-    success: function( response ) {
-      console.log( response ); // server response
-      var lyrics = response.message.body.lyrics.lyrics_body;
-      lyrics = lyrics.substring(0, lyrics.indexOf("*"));
-      lyrics = lyrics.toLowerCase();
-      var arr = lyrics.split(/[().,;!?\[\]\n\s]/g);
-      var dict = {};
-      for (i = 0; i < arr.length; i++) {
-        var stop = false;
-        for (j = 0; j < stop_words.length; j++) {
-          if (arr[i] === stop_words[j]) {
-            stop = true;
-            break;
-          }
-        }
-        if (!stop) {
-          if (!(arr[i] in dict)) {
-            dict[arr[i]] = 1;
-          } else {
-            dict[arr[i]]++;
-          }
-        }
-      }
-      return dict[word];
     }
   });
 }
@@ -493,15 +343,13 @@ function getFrequency(track, artist, word) {
  *  Functions for making the word cloud:
  */
 
-function myFunction(arr) {
+function createWordCloud(arr, callback) {
 
     //Different font sizes
     var fontSizes = [ "10px", "20px", "30px", "40px", "50px", "60px", "70px", "80px", "90px", "100px"];
-
     var big_freq = arr[0][1]; //the number of the biggest frequency goes here
-
     arr = shuffle(arr);
-
+    var returnVal = new Array();
 
     for(count = 0; count < arr.length; count++) {//Change this to iterate through the loop
 
@@ -559,188 +407,25 @@ function myFunction(arr) {
         }
 
         //console.log(document.getElementById("something"));
-        document.getElementById("something").appendChild(span);//adding span to element
+        //document.getElementById("something").appendChild(span);//adding span to element
+        returnVal.push(span);
     }
-}
-
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-
-/**
- *  Function for shuffling word cloud array:
- */
-
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
+    return returnVal;
 }
 
 
 //LYRICSPAGE.PHP **********************************
 
-function lyricsPageFunction() {
-  $.ajax({
-    url: "CurrentArtistAndSong.php",
-    dataType: "text",
-    success: function( response ) {
-      var songAndArtist = response.split("1996!&#@($@&)#^&*:-");
-      var title = document.getElementById('title_lyrics_page');
-      title.innerHTML = songAndArtist[0] + " by " + songAndArtist[1];
-      setLyrics(songAndArtist[0], songAndArtist[1], songAndArtist[2]);
-      var title = document.getElementById("title");
-      var pageTitle = document.getElementById("title_lyrics_page");
-      title.innerHTML = songAndArtist[0];
-      title.innerHTML = songAndArtist[0];
-        }
-     });
-
-  /*$("#back_to_WC_btn").click(function(){
-    console.log("wc button");
-    window.location.href = "wordcloud.php";
-  });
-
-  $("#back_to_songlist_btn").click(function(){
-    console.log("songlist btn");
-    window.location.href = "songListPage.php";
-  });*/
-}
-
 //SONGLISTPAGE.PHP *********************
 
-generateList();
-
-function generateList() {
-
-  var request = $.ajax({
-    url: "GetArtists.php",
-    type: "GET",
-    dataType: "text"
-  });
-
-  request.done(function(msg) {
-    artists_arr = JSON.parse(msg);
-    // console.log("Are you an array? " + artists_arr[0]);
-    //console.log(artists_arr);
-
-    var request2 = $.ajax({
-      url: "GetWord.php",
-      type: "GET",
-      dataType: "text"
-    });
-    request2.done(function(msg2) {
-      // console.log(msg2.trim());
-      getSongsFromWord(artists_arr, msg2.trim());
-    });
-  });
-}
-
-
-function songSelected(word) {
+function songSelected(word, callback) {
   var index = word.indexOf('(');
   var song = word.substring(0, index);
   song = song.trim();
   index = word.indexOf('-');
   var artist = word.substring(index + 1);
   artist = artist.trim()
-  console.log(artist + " " + song);
-
-  var request = $.ajax({
-    url: "SetCurrentSongAndArtist.php",
-    type: "POST",
-    data: {artist : artist, song : song},
-    dataType: "text"
-  });
-
-  request.done(function(msg) {
-    window.location.href = "lyricsPage.php";
-  });
-
+  callback(artist + " " + song);
 }
 
 //WORDCLOUD.PHP *******************
-
-
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-function filterFunction() {
-  var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdown");
-  a = div.getElementsByTagName("a");
-  for (i = 0; i < a.length; i++) {
-    if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-      a[i].style.display = "";
-    } else {
-      a[i].style.display = "none";
-    }
-  }
-}
-
-function generateWordCloud() {
-
-  document.getElementById("something").innerHTML = "";
-
-    var arr;
-
-    var request = $.ajax({
-    url: "GetArtists.php",
-    type: "GET",
-    dataType: "text"
-  });
-
-  request.done(function(msg) {
-    arr = JSON.parse(msg);
-    getWords(arr);
-  });
-
-
-}
-
-    // Generate a new webpage with single artist in input field?
-
-function downloadURI(uri, name) {
-  var link = document.createElement("a");
-  link.download = name;
-  link.href = uri;
-  document.body.appendChild(link);
-  link.click();
-}
-
-var delayTimer;
-// doSearch takes in the user's input and displays the drop-down suggestions
-function doSearch(suggestions){
-
-  document.getElementById('artistlist').innerHTML = "";
-  var list = document.getElementById('artistlist');
-  for (var i = 0; i < suggestions.length; i++){
-    // appendHTML += '<option value="' + suggestions[i] + '"/>';
-    var option = document.createElement('option');
-    option.value = suggestions[i];
-    list.appendChild(option);
-  }
-}
