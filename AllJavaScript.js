@@ -207,11 +207,11 @@ function getSearchSuggestions(prefix, callback) {
 
  function getArtistID(artist, callback) {
    $.ajax({
-     url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(artists) + "&limit=10",
+     url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(artist) + "&limit=10",
      dataType: "json",
      success: function( response ) {
        console.log( response ); // server response
-       console.log(artists);
+       console.log(artist);
        callback(response.data[0].id);
      }
    });
@@ -230,7 +230,7 @@ function getSearchSuggestions(prefix, callback) {
 
  function getLyrics(track, artist, callback) {
    $.ajax({
-     url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(track.title) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=3174b763187f551ccf94d9d927c8de8b",
+     url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + encodeURIComponent(track) + "&q_artist=" + encodeURIComponent(artist) + "&apikey=3174b763187f551ccf94d9d927c8de8b",
      dataType: "jsonp",
      success: function( response ) {
        console.log( response ); // server response
