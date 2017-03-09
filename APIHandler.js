@@ -184,17 +184,11 @@ function getSearchSuggestions(prefix) {
     url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(prefix) + "&limit=10",
     dataType: "json",
     success: function( response ) {
-<<<<<<< HEAD
-      //console.log( response ); // server response
-      var suggestions = new Array();
-      for (var i = 0; i < 9; i++) {
-        //console.log("Suggestion: " + response.data[i].name);
-=======
+
       // console.log( response ); // server response
       var suggestions = new Array();
       for (var i = 0; i < 9; i++) {
         // console.log("Suggestion: " + response.data[i].name);
->>>>>>> 776dcc9fc72767a57b8de937f945fd5972d9abd2
         arr[i] = response.data[i].name;
       }
       return suggestions;
@@ -212,13 +206,9 @@ function getArtistImage(artist) {
     dataType: "json",
     crossDomain: false,
     success: function( response ) {
-<<<<<<< HEAD
-      //console.log( response ); // server response
-      //console.log(response.artists.items[0].images[0].url);
-=======
+
       // console.log( response ); // server response
       // console.log(response.artists.items[0].images[0].url);
->>>>>>> 776dcc9fc72767a57b8de937f945fd5972d9abd2
     }
   });
 }
@@ -229,11 +219,7 @@ function getArtistImage(artist) {
 
  function getWords(artists) {
    var ret = {words: ""};
-<<<<<<< HEAD
-   //console.log(artists);
-=======
    // console.log(artists);
->>>>>>> 776dcc9fc72767a57b8de937f945fd5972d9abd2
    getArtistID(artists, 0, ret);
  }
 
