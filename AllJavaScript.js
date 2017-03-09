@@ -1,43 +1,6 @@
 //INDEX.PHP *************************
 
-// This variable keeps track of the Timer for searches
-var delayTimer;
-
-// doSearch takes in the user's input and displays the drop-down suggestions
-function doSearch(suggestions){
-
-  document.getElementById('artistlist').innerHTML = "";
-  var list = document.getElementById('artistlist');
-  for (var i = 0; i < suggestions.length; i++){
-    // appendHTML += '<option value="' + suggestions[i] + '"/>';
-    var option = document.createElement('option');
-    option.value = suggestions[i];
-    list.appendChild(option);
-  }
-}
-
-function getSearchSuggestions(prefix) {
-  $.ajax({
-    url: "http://api.musicgraph.com/api/v2/artist/suggest?api_key=88712a31d1b453ddc573d33c455a9888&prefix=" + encodeURIComponent(prefix) + "&limit=10",
-    dataType: "json",
-    success: function( response ) {
-        // console.log( response ); // server response
-        var suggestions = new Array();
-        for (var i = 0; i < 10; i++) {
-            //console.log("Suggestion: " + response.data[i].name);
-            suggestions.push(response.data[i].name);
-          }
-          // clearTimeout(delayTimer);
-          // setTimeout(function () {
-          // 	doSearch(suggestions);
-          // }, 2500);
-          //return suggestions;
-          //console.log(response);
-          doSearch(suggestions);
-
-        }
-    });
-}
+//same as WORDCLOUD.PHP
 
 //APIHANDLER.JS **************************
 
@@ -699,36 +662,32 @@ $(document).ready(function() {
 
 //SONGLISTPAGE.PHP *********************
 
-$(document).ready(function () {
+generateList();
 
-  generateList();
+function generateList() {
 
-  function generateList() {
+  var request = $.ajax({
+    url: "GetArtists.php",
+    type: "GET",
+    dataType: "text"
+  });
 
-    var request = $.ajax({
-      url: "GetArtists.php",
+  request.done(function(msg) {
+    artists_arr = JSON.parse(msg);
+    // console.log("Are you an array? " + artists_arr[0]);
+    //console.log(artists_arr);
+
+    var request2 = $.ajax({
+      url: "GetWord.php",
       type: "GET",
       dataType: "text"
     });
-
-    request.done(function(msg) {
-      artists_arr = JSON.parse(msg);
-      // console.log("Are you an array? " + artists_arr[0]);
-      //console.log(artists_arr);
-
-      var request2 = $.ajax({
-        url: "GetWord.php",
-        type: "GET",
-        dataType: "text"
-      });
-      request2.done(function(msg2) {
-        // console.log(msg2.trim());
-        getSongsFromWord(artists_arr, msg2.trim());
-      });
+    request2.done(function(msg2) {
+      // console.log(msg2.trim());
+      getSongsFromWord(artists_arr, msg2.trim());
     });
-  }
-
-})
+  });
+}
 
 
 function songSelected(word) {
@@ -755,31 +714,29 @@ function songSelected(word) {
 
 //WORDCLOUD.PHP *******************
 
-$(document).ready(function() {
-
 generateWordCloud();
 
 
-    /* When the user clicks on the button,
-    toggle between hiding and showing the dropdown content */
-    function myFunction() {
-      document.getElementById("myDropdown").classList.toggle("show");
-    }
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
 
-    function filterFunction() {
-      var input, filter, ul, li, a, i;
-      input = document.getElementById("myInput");
-      filter = input.value.toUpperCase();
-      div = document.getElementById("myDropdown");
-      a = div.getElementsByTagName("a");
-      for (i = 0; i < a.length; i++) {
-        if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-          a[i].style.display = "";
-        } else {
-          a[i].style.display = "none";
-        }
-      }
+function filterFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdown");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
     }
+  }
+}
 
 function generateWordCloud() {
 
@@ -803,13 +760,13 @@ function generateWordCloud() {
 
     // Generate a new webpage with single artist in input field?
 
-    function downloadURI(uri, name) {
-      var link = document.createElement("a");
-      link.download = name;
-      link.href = uri;
-      document.body.appendChild(link);
-      link.click();
-  }
+function downloadURI(uri, name) {
+  var link = document.createElement("a");
+  link.download = name;
+  link.href = uri;
+  document.body.appendChild(link);
+  link.click();
+}
 
 var delayTimer;
 // doSearch takes in the user's input and displays the drop-down suggestions
